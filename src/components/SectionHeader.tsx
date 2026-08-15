@@ -10,6 +10,7 @@ export function SectionHeader({
   title,
   intro,
   as = "h2",
+  size,
   align = "left",
   className,
 }: {
@@ -17,6 +18,9 @@ export function SectionHeader({
   title: string;
   intro?: string;
   as?: "h1" | "h2";
+  /** Visual scale, independent of the heading level. Centrepiece sections may
+   *  step up to `h1` scale while staying an <h2> semantically. */
+  size?: "h1" | "h2";
   align?: "left" | "center";
   className?: string;
 }) {
@@ -39,7 +43,7 @@ export function SectionHeader({
         className={cn(
           // text-balance evens out the line lengths and avoids orphan words
           "text-balance font-display text-ink",
-          as === "h1" ? "text-h1" : "text-h2",
+          (size ?? as) === "h1" ? "text-h1" : "text-h2",
           eyebrow && "mt-4",
         )}
       >
