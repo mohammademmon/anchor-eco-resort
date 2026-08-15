@@ -5,7 +5,8 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Toaster } from "@/components/ui/sonner";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { StickyWhatsApp } from "@/components/StickyWhatsApp";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { routing } from "@/i18n/routing";
 import { getSettings, safe } from "@/lib/queries";
 import { display, body, bnDisplay, bnBody } from "../fonts";
@@ -49,16 +50,22 @@ export default async function LocaleLayout({
   const settings = await safe(getSettings, null);
 
   const fontVars = `${display.variable} ${body.variable} ${bnDisplay.variable} ${bnBody.variable}`;
-  const bodyFont = locale === "bn" ? "font-bn-body" : "font-body";
+  const brand = settings?.brand || "Anchor Eco Resort & Spa";
 
   return (
-    <html lang={locale} className={`${fontVars} h-full antialiased`}>
-      <body className={`flex min-h-full flex-col ${bodyFont}`}>
+    // data-lang drives the Bangla font swap in globals.css (§3, §9).
+    <html
+      lang={locale}
+      data-lang={locale}
+      className={`${fontVars} h-full antialiased`}
+    >
+      <body className="flex min-h-full flex-col font-body">
         <NextIntlClientProvider>
-          <Navbar settings={settings} />
+          <SmoothScroll />
+          <Navbar brand={brand} whatsapp={settings?.whatsapp} />
           <main className="flex-1">{children}</main>
           <Footer settings={settings} />
-          <WhatsAppButton variant="floating" number={settings?.whatsapp} />
+          <StickyWhatsApp number={settings?.whatsapp} />
         </NextIntlClientProvider>
         <Toaster />
       </body>

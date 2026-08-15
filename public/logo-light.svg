@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 68" role="img" aria-label="Anchor Eco Resort &amp; Spa">
+  <!-- Monochrome cream mark for use over photography / dark scrims -->
+  <g>
+    <line x1="30" y1="8" x2="30" y2="30" stroke="#EFE9DC" stroke-width="2" stroke-linecap="round"/>
+    <path d="M30 9 L43 30 L30 30 Z" fill="#EFE9DC"/>
+    <path d="M28 12 L18 30 L28 30 Z" fill="#EFE9DC" opacity="0.75"/>
+    <path d="M14 32 Q30 41 46 32 L42 36 Q30 40 18 36 Z" fill="#EFE9DC"/>
+  </g>
+  <text x="56" y="34" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="30" font-weight="800" fill="#EFE9DC" letter-spacing="-0.5">Anchor</text>
+  <text x="57" y="52" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="10.5" font-weight="600" fill="#EFE9DC" opacity="0.82" letter-spacing="3.2">ECO RESORT &amp; SPA</text>
+</svg>

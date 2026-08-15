@@ -12,7 +12,7 @@ import {
 } from "@/lib/queries";
 import { loc } from "@/lib/i18n-content";
 import { roomPrice } from "@/lib/format";
-import { Container } from "@/components/Container";
+import { Hero } from "@/components/Hero";
 import { PageSection } from "@/components/PageSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Placeholder } from "@/components/Placeholder";
@@ -51,7 +51,6 @@ export default async function HomePage({
       safe(getPublishedReviews, []),
     ]);
 
-  const displayFont = locale === "bn" ? "font-bn-display" : "font-display";
   const heroTitle =
     loc(settings?.heroTitleEn, settings?.heroTitleBn, locale) || t("hero.title");
   const heroSubtitle =
@@ -60,34 +59,13 @@ export default async function HomePage({
 
   return (
     <>
-      {/* Hero */}
-      <section aria-label={heroTitle} className="border-b border-line bg-sand/30">
-        <Container className="py-20 text-center md:py-28">
-          <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-teal">
-            {t("hero.eyebrow")}
-          </p>
-          <h1 className={`${displayFont} mx-auto max-w-3xl text-4xl leading-tight text-ink sm:text-5xl`}>
-            {heroTitle}
-          </h1>
-          <p className="mx-auto mt-4 max-w-[60ch] text-ink-soft">{heroSubtitle}</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/book" className="rounded-full bg-forest px-6 py-3 text-sm font-medium text-paper hover:bg-forest-600">
-              {t("hero.ctaBook")}
-            </Link>
-            <Link href="/rooms" className="rounded-full border border-line px-6 py-3 text-sm font-medium text-ink hover:bg-paper-raised">
-              {t("hero.ctaExplore")}
-            </Link>
-          </div>
-          {settings?.heroImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={settings.heroImage}
-              alt={heroTitle}
-              className="mx-auto mt-10 max-h-[520px] w-full max-w-5xl rounded-2xl object-cover"
-            />
-          ) : null}
-        </Container>
-      </section>
+      <Hero
+        imageUrl={settings?.heroImage}
+        heading={heroTitle}
+        subtitle={heroSubtitle}
+        brand={settings?.brand || "Anchor Eco Resort & Spa"}
+        whatsapp={settings?.whatsapp}
+      />
 
       {/* Eco Story */}
       <PageSection id="eco-story" label={t("ecoStory.title")}>

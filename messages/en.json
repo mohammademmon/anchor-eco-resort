@@ -19,7 +19,10 @@
     "about": "About",
     "contact": "Contact",
     "book": "Book",
-    "admin": "Admin"
+    "admin": "Admin",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "WhatsApp": {
     "label": "Book on WhatsApp",

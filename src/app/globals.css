@@ -88,6 +88,71 @@
   --font-bn-body: var(--font-bn-body);
 }
 
+/* Type scale (fluid) — design system §3. Utilities: text-display, text-h1, … */
+@theme {
+  --text-display: clamp(2.75rem, 6vw, 5rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.02em;
+
+  --text-h1: clamp(2.25rem, 4vw, 3.25rem);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.015em;
+
+  --text-h2: clamp(1.75rem, 3vw, 2.5rem);
+  --text-h2--line-height: 1.15;
+  --text-h2--letter-spacing: -0.01em;
+
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.2;
+
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.7;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.7;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.6;
+
+  --text-eyebrow: 0.8125rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.18em;
+
+  /* Soft, warm-tinted shadows — design system §5 */
+  --shadow-soft: 0 1px 2px rgba(35, 40, 33, 0.04), 0 10px 30px rgba(35, 40, 33, 0.06);
+  --shadow-lift: 0 12px 40px rgba(35, 40, 33, 0.12);
+
+  /* Motion tokens — design system §6 */
+  --ease-signature: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Bangla locale: swap the display/body families and loosen leading (§3, §9).
+   Higher specificity than the next/font class on <html>, so these win. */
+html[data-lang="bn"] {
+  --font-display: var(--font-bn-display);
+  --font-body: var(--font-bn-body);
+  line-height: 1.8;
+}
+
+/* Bangla typography corrections (§9):
+   – wide tracking breaks conjuncts and the matra line, so relax it
+   – headings need ~0.1 more leading for ascenders/descenders */
+html[data-lang="bn"] .text-eyebrow {
+  letter-spacing: 0.04em;
+}
+html[data-lang="bn"] .text-display {
+  line-height: 1.18;
+  letter-spacing: normal;
+}
+html[data-lang="bn"] .text-h1 {
+  line-height: 1.22;
+  letter-spacing: normal;
+}
+html[data-lang="bn"] .text-h2 {
+  line-height: 1.28;
+  letter-spacing: normal;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -168,5 +233,66 @@
   /* Anchor defaults: warm paper background, warm ink text, body font */
   body {
     @apply bg-paper text-ink font-body;
+  }
+
+  /* Visible teal focus ring on every interactive element (§10) */
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 2px;
+    border-radius: var(--radius);
+  }
+
+  /* Reduced motion: drop transforms/parallax, keep gentle opacity (§6) */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* Copy set over photography. The scrim handles most of the work, but the hero
+   image is CMS-swappable — this soft halo guarantees legibility on any photo
+   without darkening the picture (§8, §10). Diffuse, never a hard drop shadow. */
+.text-on-photo {
+  text-shadow: 0 1px 20px rgba(26, 33, 26, 0.55);
+}
+
+/* Hero entrance. Deliberately CSS (not JS) so it begins at first paint instead
+   of waiting for hydration — the H1 is the LCP element and must not be gated
+   behind JS. Reduced-motion is handled by the global guard above. */
+@keyframes anchor-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.anchor-rise {
+  animation: anchor-rise 0.8s var(--ease-signature) both;
+}
+
+/* Quiet scroll cue for the hero */
+@keyframes anchor-scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
   }
 }
