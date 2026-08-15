@@ -1,6 +1,16 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { ROOM_SLUGS, OFFER_IDS } from "@/lib/content";
+import {
+  getSettings,
+  getFeaturedRooms,
+  getPublishedAmenities,
+  getPublishedOffers,
+  getPublishedGallery,
+  getPublishedReviews,
+  safe,
+} from "@/lib/queries";
+import { loc } from "@/lib/i18n-content";
+import { roomPrice } from "@/lib/format";
 import { Container } from "@/components/Container";
 import { PageSection } from "@/components/PageSection";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -18,25 +28,37 @@ export default async function HomePage({
 
   const t = await getTranslations("Home");
   const tc = await getTranslations("Common");
-  const tr = await getTranslations("Rooms");
-  const to = await getTranslations("Offers");
+  const perNight = tc("perNight");
+
+  const [settings, rooms, amenities, offers, gallery, reviews] =
+    await Promise.all([
+      safe(getSettings, null),
+      safe(getFeaturedRooms, []),
+      safe(getPublishedAmenities, []),
+      safe(getPublishedOffers, []),
+      safe(getPublishedGallery, []),
+      safe(getPublishedReviews, []),
+    ]);
 
   const displayFont = locale === "bn" ? "font-bn-display" : "font-display";
-  const amenities = t.raw("amenities.items") as string[];
-  const reviews = t.raw("reviews.items") as { quote: string; author: string }[];
+  const heroTitle =
+    loc(settings?.heroTitleEn, settings?.heroTitleBn, locale) || t("hero.title");
+  const heroSubtitle =
+    loc(settings?.heroSubtitleEn, settings?.heroSubtitleBn, locale) ||
+    t("hero.subtitle");
 
   return (
     <>
       {/* Hero */}
-      <section aria-label={t("hero.title")} className="border-b border-line bg-sand/30">
+      <section aria-label={heroTitle} className="border-b border-line bg-sand/30">
         <Container className="py-20 text-center md:py-28">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-teal">
             {t("hero.eyebrow")}
           </p>
           <h1 className={`${displayFont} mx-auto max-w-3xl text-4xl leading-tight text-ink sm:text-5xl`}>
-            {t("hero.title")}
+            {heroTitle}
           </h1>
-          <p className="mx-auto mt-4 max-w-[60ch] text-ink-soft">{t("hero.subtitle")}</p>
+          <p className="mx-auto mt-4 max-w-[60ch] text-ink-soft">{heroSubtitle}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link href="/book" className="rounded-full bg-forest px-6 py-3 text-sm font-medium text-paper hover:bg-forest-600">
               {t("hero.ctaBook")}
@@ -51,7 +73,9 @@ export default async function HomePage({
       {/* Eco Story */}
       <PageSection id="eco-story" label={t("ecoStory.title")}>
         <SectionHeader eyebrow={t("ecoStory.eyebrow")} title={t("ecoStory.title")} />
-        <p className="max-w-[65ch] text-ink-soft">{t("ecoStory.body")}</p>
+        <p className="max-w-[65ch] text-ink-soft">
+          {loc(settings?.taglineEn, settings?.taglineBn, locale) || t("ecoStory.body")}
+        </p>
       </PageSection>
 
       {/* Featured Rooms */}
@@ -61,29 +85,34 @@ export default async function HomePage({
           title={t("featuredRooms.title")}
           intro={t("featuredRooms.intro")}
         />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {ROOM_SLUGS.map((slug) => (
-            <RoomCard
-              key={slug}
-              slug={slug}
-              name={tr(`items.${slug}.name`)}
-              view={tr(`items.${slug}.view`)}
-              blurb={tr(`items.${slug}.blurb`)}
-              price={tr(`items.${slug}.price`)}
-              imageLabel={tc("imageLabel")}
-              viewDetails={tc("viewDetails")}
-            />
-          ))}
-        </div>
+        {rooms.length ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+            {rooms.map((r) => (
+              <RoomCard
+                key={r.id}
+                slug={r.slug}
+                name={loc(r.nameEn, r.nameBn, locale)}
+                view={r.view}
+                blurb={loc(r.descriptionEn, r.descriptionBn, locale)}
+                price={roomPrice(r.weekdayRate, r.weekendRate, perNight)}
+                image={r.images?.[0]}
+                imageLabel={tc("imageLabel")}
+                viewDetails={tc("viewDetails")}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-ink-soft">{tc("imageLabel")}</p>
+        )}
       </PageSection>
 
       {/* Amenities */}
       <PageSection id="amenities" label={t("amenities.title")}>
         <SectionHeader eyebrow={t("amenities.eyebrow")} title={t("amenities.title")} />
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {amenities.map((item, i) => (
-            <li key={i} className="rounded-xl border border-line bg-paper-raised p-4 text-ink">
-              {item}
+          {amenities.map((a) => (
+            <li key={a.id} className="rounded-xl border border-line bg-paper-raised p-4 text-ink">
+              {loc(a.nameEn, a.nameBn, locale)}
             </li>
           ))}
         </ul>
@@ -96,19 +125,24 @@ export default async function HomePage({
           title={t("offers.title")}
           intro={t("offers.intro")}
         />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-          {OFFER_IDS.map((id) => (
-            <OfferCard
-              key={id}
-              title={to(`items.${id}.title`)}
-              badge={to(`items.${id}.badge`)}
-              blurb={to(`items.${id}.blurb`)}
-              price={to(`items.${id}.price`)}
-              imageLabel={tc("imageLabel")}
-              cta={tc("learnMore")}
-            />
-          ))}
-        </div>
+        {offers.length ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+            {offers.map((o) => (
+              <OfferCard
+                key={o.id}
+                title={loc(o.titleEn, o.titleBn, locale)}
+                badge={loc(o.badgeEn, o.badgeBn, locale)}
+                blurb={loc(o.descriptionEn, o.descriptionBn, locale)}
+                price={o.price ?? ""}
+                image={o.image}
+                imageLabel={tc("imageLabel")}
+                cta={tc("learnMore")}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-ink-soft">{t("offers.intro")}</p>
+        )}
       </PageSection>
 
       {/* Gallery */}
@@ -119,9 +153,19 @@ export default async function HomePage({
           intro={t("gallery.intro")}
         />
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Placeholder key={i} label={`${tc("imageLabel")} ${i + 1}`} />
-          ))}
+          {gallery.length
+            ? gallery.slice(0, 6).map((g) => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={g.id}
+                  src={g.url}
+                  alt={loc(g.captionEn, g.captionBn, locale) || tc("imageLabel")}
+                  className="aspect-[4/3] w-full rounded-2xl object-cover"
+                />
+              ))
+            : Array.from({ length: 6 }).map((_, i) => (
+                <Placeholder key={i} label={`${tc("imageLabel")} ${i + 1}`} />
+              ))}
         </div>
         <Link href="/gallery" className="mt-6 inline-block text-sm font-medium text-forest hover:underline">
           {tc("viewAll")} →
@@ -132,10 +176,17 @@ export default async function HomePage({
       <PageSection id="reviews" label={t("reviews.title")}>
         <SectionHeader eyebrow={t("reviews.eyebrow")} title={t("reviews.title")} />
         <div className="grid gap-6 md:grid-cols-3">
-          {reviews.map((r, i) => (
-            <figure key={i} className="rounded-2xl border border-line bg-paper-raised p-6">
-              <blockquote className="text-ink-soft">“{r.quote}”</blockquote>
-              <figcaption className="mt-3 text-sm font-medium text-ink">— {r.author}</figcaption>
+          {reviews.map((rv) => (
+            <figure key={rv.id} className="rounded-2xl border border-line bg-paper-raised p-6">
+              <p className="text-gold" aria-hidden="true">
+                {"★".repeat(rv.rating)}
+              </p>
+              <blockquote className="mt-2 text-ink-soft">
+                “{loc(rv.bodyEn, rv.bodyBn, locale)}”
+              </blockquote>
+              <figcaption className="mt-3 text-sm font-medium text-ink">
+                — {rv.author}
+              </figcaption>
             </figure>
           ))}
         </div>
@@ -146,7 +197,9 @@ export default async function HomePage({
         <SectionHeader eyebrow={t("location.eyebrow")} title={t("location.title")} />
         <div className="grid gap-6 md:grid-cols-2">
           <div className="text-ink-soft">
-            <p className="font-medium text-ink">{t("location.address")}</p>
+            <p className="font-medium text-ink">
+              {loc(settings?.addressEn, settings?.addressBn, locale) || t("location.address")}
+            </p>
             <p className="mt-2">{t("location.directions")}</p>
           </div>
           <Placeholder label={tc("mapPlaceholder")} aspect="aspect-[16/9]" />

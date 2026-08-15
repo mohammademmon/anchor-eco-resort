@@ -5,8 +5,11 @@
     "mapPlaceholder": "Map placeholder",
     "viewDetails": "View details",
     "learnMore": "Learn more",
+    "perNight": "/ night",
     "viewAll": "View all",
-    "notWired": "This form is a placeholder — not connected yet (Phase 2)."
+    "sending": "Sending…",
+    "formSuccess": "Thank you — we’ll be in touch shortly.",
+    "formError": "Something went wrong. Please try again."
   },
   "Nav": {
     "home": "Home",
@@ -262,7 +265,7 @@
   "Admin": {
     "login": {
       "title": "Admin Login",
-      "note": "Placeholder — no authentication yet (Phase 2).",
+      "note": "Sign in to manage the website content.",
       "email": "Email",
       "password": "Password",
       "submit": "Sign in",
@@ -276,6 +279,7 @@
         "rooms": "Rooms",
         "offers": "Offers",
         "gallery": "Gallery",
+        "amenities": "Amenities",
         "reviews": "Reviews",
         "settings": "Settings"
       }

@@ -1,20 +1,23 @@
 import { getTranslations } from "next-intl/server";
 import { MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { WHATSAPP_URL } from "@/lib/content";
+import { WHATSAPP_NUMBER } from "@/lib/content";
 
 // The primary CTA. Rendered inline in the navbar and fixed bottom-right site-wide.
 // (Placeholder styling only — Phase 3 gives it the eco-luxe treatment.)
 export async function WhatsAppButton({
   variant = "inline",
+  number,
 }: {
   variant?: "inline" | "floating";
+  number?: string | null;
 }) {
   const t = await getTranslations("WhatsApp");
+  const url = `https://wa.me/${number || WHATSAPP_NUMBER}`;
 
   return (
     <a
-      href={WHATSAPP_URL}
+      href={url}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t("aria")}

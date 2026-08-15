@@ -7,8 +7,12 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { routing } from "@/i18n/routing";
+import { getSettings, safe } from "@/lib/queries";
 import { display, body, bnDisplay, bnBody } from "../fonts";
 import "../globals.css";
+
+// CMS-driven content is read at request time.
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Anchor Eco Resort & Spa",
@@ -32,8 +36,9 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  // Enable static rendering for this locale.
   setRequestLocale(locale);
+
+  const settings = await safe(getSettings, null);
 
   const fontVars = `${display.variable} ${body.variable} ${bnDisplay.variable} ${bnBody.variable}`;
   const bodyFont = locale === "bn" ? "font-bn-body" : "font-body";
@@ -42,10 +47,10 @@ export default async function LocaleLayout({
     <html lang={locale} className={`${fontVars} h-full antialiased`}>
       <body className={`flex min-h-full flex-col ${bodyFont}`}>
         <NextIntlClientProvider>
-          <Navbar />
+          <Navbar settings={settings} />
           <main className="flex-1">{children}</main>
-          <Footer />
-          <WhatsAppButton variant="floating" />
+          <Footer settings={settings} />
+          <WhatsAppButton variant="floating" number={settings?.whatsapp} />
         </NextIntlClientProvider>
         <Toaster />
       </body>

@@ -49,6 +49,7 @@ export const ADMIN_SECTIONS = [
   "rooms",
   "offers",
   "gallery",
+  "amenities",
   "reviews",
   "settings",
 ] as const;

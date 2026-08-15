@@ -1,4 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getSettings, safe } from "@/lib/queries";
+import { loc } from "@/lib/i18n-content";
 import { PageSection } from "@/components/PageSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Placeholder } from "@/components/Placeholder";
@@ -13,10 +15,15 @@ export default async function ContactPage({
   setRequestLocale(locale);
 
   const t = await getTranslations("Contact");
+  const settings = await safe(getSettings, null);
+
+  const phones = [settings?.phone1, settings?.phone2, settings?.phone3]
+    .filter((p): p is string => !!p && p.length > 0)
+    .join(" · ");
+  const address = loc(settings?.addressEn, settings?.addressBn, locale) || t("address");
 
   return (
     <>
-      {/* Header */}
       <PageSection label={t("header.title")}>
         <SectionHeader
           as="h1"
@@ -26,7 +33,6 @@ export default async function ContactPage({
         />
       </PageSection>
 
-      {/* Info + Map */}
       <PageSection label={t("infoHeading")}>
         <div className="grid gap-8 md:grid-cols-2">
           <div>
@@ -34,15 +40,17 @@ export default async function ContactPage({
             <dl className="space-y-2 text-ink-soft">
               <div>
                 <dt className="inline font-medium text-ink">{t("phoneLabel")}: </dt>
-                <dd className="inline">{t("phone")}</dd>
+                <dd className="inline">{phones || t("phone")}</dd>
               </div>
-              <div>
-                <dt className="inline font-medium text-ink">{t("emailLabel")}: </dt>
-                <dd className="inline">{t("email")}</dd>
-              </div>
+              {settings?.email ? (
+                <div>
+                  <dt className="inline font-medium text-ink">{t("emailLabel")}: </dt>
+                  <dd className="inline">{settings.email}</dd>
+                </div>
+              ) : null}
               <div>
                 <dt className="inline font-medium text-ink">{t("addressLabel")}: </dt>
-                <dd className="inline">{t("address")}</dd>
+                <dd className="inline">{address}</dd>
               </div>
             </dl>
           </div>
@@ -50,7 +58,6 @@ export default async function ContactPage({
         </div>
       </PageSection>
 
-      {/* Inquiry form */}
       <PageSection label={t("form.heading")} className="border-b-0">
         <h2 className="mb-6 font-display text-xl text-ink">{t("form.heading")}</h2>
         <ContactForm />
