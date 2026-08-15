@@ -1,15 +1,15 @@
 {
   "Common": {
     "resortName": "Anchor Eco Resort & Spa",
-    "imageLabel": "Image placeholder",
-    "mapPlaceholder": "Map placeholder",
-    "viewDetails": "View details",
+    "imageLabel": "Image",
+    "mapPlaceholder": "Map",
+    "viewDetails": "View Details",
     "learnMore": "Learn more",
     "perNight": "/ night",
     "viewAll": "View all",
     "sending": "Sending…",
-    "formSuccess": "Thank you — we’ll be in touch shortly.",
-    "formError": "Something went wrong. Please try again."
+    "formSuccess": "Thank you — we've received your request and will confirm shortly on WhatsApp or phone.",
+    "formError": "Something went wrong. Please try again, or reach us on WhatsApp."
   },
   "Nav": {
     "home": "Home",
@@ -26,107 +26,68 @@
     "aria": "Chat with us on WhatsApp"
   },
   "Footer": {
-    "tagline": "Placeholder tagline — an eco-luxe retreat by the sea.",
+    "tagline": "Where the forest meets the sea.",
     "contactHeading": "Contact",
     "linksHeading": "Explore",
     "socialHeading": "Follow us",
     "phoneLabel": "Phone",
     "addressLabel": "Address",
-    "phone1": "+880 1897 629200",
-    "phone2": "+880 0000 000000",
-    "address": "Placeholder address, Cox’s Bazar, Bangladesh",
-    "socialFacebook": "Facebook (placeholder)",
-    "socialInstagram": "Instagram (placeholder)",
-    "socialYoutube": "YouTube (placeholder)",
-    "rights": "All rights reserved."
+    "phone1": "01897 629 200",
+    "phone2": "01897 629 191",
+    "address": "Inani Beach, Ukhia, Cox's Bazar 4750, Bangladesh",
+    "socialFacebook": "Facebook",
+    "socialInstagram": "Instagram",
+    "socialYoutube": "YouTube",
+    "rights": "© {year} Anchor Eco Resort & Spa. All rights reserved."
   },
   "Home": {
     "hero": {
       "eyebrow": "Eco-luxe retreat",
-      "title": "Anchor Eco Resort & Spa",
-      "subtitle": "Placeholder hero subtitle — a calm, natural escape by the sea.",
-      "ctaBook": "Book your stay",
-      "ctaExplore": "Explore rooms"
+      "title": "A quiet luxury by Inani Beach",
+      "subtitle": "An eco-retreat of thatched cottages, an infinity pool, and open sea.",
+      "ctaBook": "Book Now",
+      "ctaExplore": "View Rooms"
     },
     "ecoStory": {
       "eyebrow": "Our story",
-      "title": "Eco Story",
-      "body": "Placeholder: the eco story goes here — our commitment to nature, sustainability, and calm luxury."
+      "title": "Where the forest meets the sea",
+      "body": "A calm, unhurried eco-retreat on the southern shore of Cox's Bazar."
     },
     "featuredRooms": {
-      "eyebrow": "Stay",
-      "title": "Featured Rooms",
-      "intro": "Placeholder intro for the featured rooms selection."
+      "eyebrow": "Stay with us",
+      "title": "Rooms & Cottages",
+      "intro": "Four ways to stay — from sea-view rooms to a private thatched cottage."
     },
     "amenities": {
-      "eyebrow": "Facilities",
-      "title": "Amenities",
-      "items": [
-        "Infinity pool (placeholder)",
-        "Spa & wellness (placeholder)",
-        "Beachfront access (placeholder)",
-        "Restaurant & bar (placeholder)",
-        "Free Wi-Fi (placeholder)",
-        "Guided eco tours (placeholder)"
-      ]
+      "eyebrow": "The resort",
+      "title": "Everything by the sea"
     },
     "offers": {
-      "eyebrow": "Deals",
-      "title": "Offers",
-      "intro": "Placeholder intro for current offers and packages."
+      "eyebrow": "Special",
+      "title": "Offers & Packages",
+      "intro": "A little more for your stay."
     },
     "gallery": {
       "eyebrow": "Moments",
-      "title": "Gallery",
-      "intro": "Placeholder intro for the photo gallery."
+      "title": "A look around",
+      "intro": "Pool, cottages, and the open sea."
     },
     "reviews": {
       "eyebrow": "Guests",
-      "title": "Reviews",
-      "items": [
-        { "quote": "Placeholder guest review one.", "author": "Guest A" },
-        { "quote": "Placeholder guest review two.", "author": "Guest B" },
-        { "quote": "Placeholder guest review three.", "author": "Guest C" }
-      ]
+      "title": "What guests say"
     },
     "location": {
       "eyebrow": "Find us",
-      "title": "Location",
-      "address": "Placeholder address, Cox’s Bazar, Bangladesh",
-      "directions": "Placeholder directions and travel notes go here."
+      "title": "On Inani Beach",
+      "address": "Inani Beach, Ukhia, Cox's Bazar 4750, Bangladesh",
+      "directions": "About 40 minutes south of Cox's Bazar town along the Marine Drive, on Inani Beach, Ukhia — near Army Baywatch Resort."
     }
   },
   "Rooms": {
     "header": {
-      "eyebrow": "Accommodation",
+      "eyebrow": "Stay with us",
       "title": "Rooms & Cottages",
-      "intro": "Placeholder intro — four room types to choose from."
-    },
-    "items": {
-      "super-deluxe-hill-side": {
-        "name": "Super Deluxe — Hill Side",
-        "view": "Hill Side",
-        "blurb": "Placeholder one-line description for the hill-side super deluxe.",
-        "price": "from ৳5,400 / night"
-      },
-      "super-deluxe-sea-view": {
-        "name": "Super Deluxe — Sea View",
-        "view": "Sea View",
-        "blurb": "Placeholder one-line description for the sea-view super deluxe.",
-        "price": "from ৳6,200 / night"
-      },
-      "premium-executive-cottage": {
-        "name": "Premium Executive Cottage",
-        "view": "Garden Cottage",
-        "blurb": "Placeholder one-line description for the executive cottage.",
-        "price": "from ৳7,800 / night"
-      },
-      "premium-deluxe-sea-view": {
-        "name": "Premium Deluxe — Sea View",
-        "view": "Sea View",
-        "blurb": "Placeholder one-line description for the premium deluxe sea view.",
-        "price": "from ৳8,500 / night"
-      }
+      "intro": "Four ways to stay — from sea-view rooms to a private thatched cottage."
     }
   },
   "RoomDetail": {
@@ -135,57 +96,27 @@
     "details": "Details",
     "back": "Back to rooms",
     "occupancy": "Occupancy",
-    "occupancyValue": "2 adults · 1 child (placeholder)",
     "size": "Size",
-    "sizeValue": "— m² (placeholder)",
     "rate": "Rate",
     "amenities": {
-      "title": "Amenities",
-      "items": [
-        "Air conditioning (placeholder)",
-        "Private balcony (placeholder)",
-        "Ensuite bathroom (placeholder)",
-        "Free Wi-Fi (placeholder)",
-        "Daily housekeeping (placeholder)",
-        "Tea & coffee (placeholder)"
-      ]
+      "title": "Amenities"
     },
     "booking": "Book this room",
-    "bookingIntro": "Placeholder — booking flow arrives in Phase 2.",
-    "bookCta": "Book this room"
+    "bookingIntro": "Send us your dates and we'll confirm on WhatsApp or phone.",
+    "bookCta": "Book Now"
   },
   "Offers": {
     "header": {
-      "eyebrow": "Deals",
+      "eyebrow": "Special",
       "title": "Offers & Packages",
-      "intro": "Placeholder intro for offers and seasonal packages."
-    },
-    "items": {
-      "winter-escape": {
-        "title": "Winter Escape",
-        "badge": "Seasonal",
-        "blurb": "Placeholder description for the winter escape package.",
-        "price": "from ৳12,000"
-      },
-      "honeymoon-retreat": {
-        "title": "Honeymoon Retreat",
-        "badge": "Couples",
-        "blurb": "Placeholder description for the honeymoon retreat package.",
-        "price": "from ৳18,000"
-      },
-      "long-stay-saver": {
-        "title": "Long-Stay Saver",
-        "badge": "Value",
-        "blurb": "Placeholder description for the long-stay saver package.",
-        "price": "from ৳30,000"
-      }
+      "intro": "A little more for your stay."
     }
   },
   "Gallery": {
     "header": {
       "eyebrow": "Moments",
-      "title": "Gallery",
-      "intro": "Placeholder intro — filter the gallery by category (non-functional in Phase 1)."
+      "title": "A look around",
+      "intro": "Pool, cottages, rooms, and the open sea."
     },
     "all": "All",
     "categories": {
@@ -201,53 +132,44 @@
     "header": {
       "eyebrow": "About us",
       "title": "About Anchor Eco Resort",
-      "intro": "Placeholder intro for the about page."
+      "intro": "Where the forest meets the sea."
     },
     "story": {
       "eyebrow": "Our story",
-      "title": "Our Story",
-      "body": "Placeholder: the story of how the resort came to be."
-    },
-    "eco": {
-      "eyebrow": "Sustainability",
-      "title": "Eco Commitment",
-      "body": "Placeholder: our environmental commitments and practices."
-    },
-    "experience": {
-      "eyebrow": "Stay with us",
-      "title": "The Experience",
-      "body": "Placeholder: what a stay with us feels like."
+      "title": "A retreat built for stillness",
+      "body": "Set along the golden sands of Inani, a place to slow down and let the sea set the pace."
     }
   },
   "Contact": {
     "header": {
       "eyebrow": "Get in touch",
       "title": "Contact Us",
-      "intro": "Placeholder intro for the contact page."
+      "intro": "We'd love to help plan your stay."
     },
     "infoHeading": "Contact information",
     "phoneLabel": "Phone",
-    "phone": "+880 1897 629200 (placeholder)",
+    "phone": "01897 629 200",
     "emailLabel": "Email",
-    "email": "hello@example.com (placeholder)",
+    "email": "",
     "addressLabel": "Address",
-    "address": "Placeholder address, Cox’s Bazar, Bangladesh",
-    "mapLabel": "Map placeholder",
+    "address": "Inani Beach, Ukhia, Cox's Bazar 4750, Bangladesh",
+    "mapLabel": "Map",
     "form": {
       "heading": "Send an inquiry",
-      "name": "Name",
-      "email": "Email",
+      "name": "Your Name",
+      "email": "Email (optional)",
       "phone": "Phone",
       "message": "Message",
-      "submit": "Send inquiry"
+      "submit": "Send Inquiry"
     }
   },
   "Book": {
     "header": {
       "eyebrow": "Reserve",
-      "title": "Booking Inquiry",
-      "intro": "Send us your preferred dates and we’ll get back to you shortly."
+      "title": "Request a Booking",
+      "intro": "Send us your preferred dates and we'll get back to you shortly."
     },
+    "whatsappNudge": "Prefer to chat? Book instantly on WhatsApp.",
     "form": {
       "room": "Room",
       "selectRoom": "Select a room",
@@ -255,11 +177,11 @@
       "checkOut": "Check-out",
       "adults": "Adults",
       "children": "Children",
-      "name": "Full name",
+      "name": "Your Name",
       "phone": "Phone",
-      "email": "Email",
+      "email": "Email (optional)",
       "message": "Message",
-      "submit": "Send booking inquiry"
+      "submit": "Send Inquiry"
     }
   },
   "Admin": {
@@ -283,6 +205,20 @@
         "reviews": "Reviews",
         "settings": "Settings"
       }
+    }
+  },
+  "Seo": {
+    "default": {
+      "title": "Anchor Eco Resort & Spa — Eco Retreat on Inani Beach, Cox's Bazar",
+      "description": "Sea-view rooms, infinity pool, and thatched cottages on the calm shore of Inani. Book on WhatsApp."
+    },
+    "home": {
+      "title": "Anchor Eco Resort & Spa — Eco Retreat on Inani Beach, Cox's Bazar",
+      "description": "Sea-view rooms, infinity pool, and thatched cottages on the calm shore of Inani. Book on WhatsApp."
+    },
+    "rooms": {
+      "title": "Rooms & Cottages — Anchor Eco Resort & Spa",
+      "description": "Sea-view rooms and private cottages from ৳4,800 / night on Inani Beach."
     }
   }
 }

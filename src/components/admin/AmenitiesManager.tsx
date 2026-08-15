@@ -15,6 +15,8 @@ import { Button } from "@/components/ui/button";
 const blank: AmenityInput = {
   nameEn: "",
   nameBn: "",
+  noteEn: "",
+  noteBn: "",
   icon: "",
   published: true,
   sortOrder: 0,
@@ -74,6 +76,8 @@ export function AmenitiesManager({ rows }: { rows: Amenity[] }) {
                         id: r.id,
                         nameEn: r.nameEn,
                         nameBn: r.nameBn,
+                        noteEn: r.noteEn ?? "",
+                        noteBn: r.noteBn ?? "",
                         icon: r.icon ?? "",
                         published: r.published,
                         sortOrder: r.sortOrder,
@@ -114,6 +118,14 @@ export function AmenitiesManager({ rows }: { rows: Amenity[] }) {
         <div className="grid gap-1.5">
           <Label htmlFor="am-nameBn">Name (BN)</Label>
           <Input id="am-nameBn" {...register("nameBn")} />
+        </div>
+        <div className="grid gap-1.5">
+          <Label htmlFor="am-noteEn">Note (EN)</Label>
+          <Input id="am-noteEn" {...register("noteEn")} />
+        </div>
+        <div className="grid gap-1.5">
+          <Label htmlFor="am-noteBn">Note (BN)</Label>
+          <Input id="am-noteBn" {...register("noteBn")} />
         </div>
         <div className="grid gap-1.5">
           <Label htmlFor="am-order">Sort order</Label>

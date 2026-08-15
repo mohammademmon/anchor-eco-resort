@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getPublishedRooms, safe } from "@/lib/queries";
 import { loc } from "@/lib/i18n-content";
@@ -5,6 +6,16 @@ import { roomPrice } from "@/lib/format";
 import { PageSection } from "@/components/PageSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { RoomCard } from "@/components/RoomCard";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Seo" });
+  return { title: t("rooms.title"), description: t("rooms.description") };
+}
 
 export default async function RoomsPage({
   params,
@@ -35,7 +46,7 @@ export default async function RoomsPage({
             slug={r.slug}
             name={loc(r.nameEn, r.nameBn, locale)}
             view={r.view}
-            blurb={loc(r.descriptionEn, r.descriptionBn, locale)}
+            blurb={loc(r.shortEn, r.shortBn, locale) || loc(r.descriptionEn, r.descriptionBn, locale)}
             price={roomPrice(r.weekdayRate, r.weekendRate, perNight)}
             image={r.images?.[0]}
             imageLabel={tc("imageLabel")}

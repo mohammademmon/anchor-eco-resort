@@ -10,6 +10,7 @@ import type { SiteSettings } from "@/lib/db/schema";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 const ta =
   "rounded-lg border border-line bg-paper px-3 py-2 text-sm text-ink outline-none focus-visible:ring-2 focus-visible:ring-teal";
@@ -40,6 +41,8 @@ export function SettingsForm({ settings }: { settings: SiteSettings | null }) {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<SettingsInput>({
     resolver: zodResolver(settingsSchema),
@@ -51,6 +54,9 @@ export function SettingsForm({ settings }: { settings: SiteSettings | null }) {
       heroTitleBn: settings?.heroTitleBn ?? "",
       heroSubtitleEn: settings?.heroSubtitleEn ?? "",
       heroSubtitleBn: settings?.heroSubtitleBn ?? "",
+      aboutEn: settings?.aboutEn ?? "",
+      aboutBn: settings?.aboutBn ?? "",
+      heroImage: settings?.heroImage ?? "",
       phone1: settings?.phone1 ?? "",
       phone2: settings?.phone2 ?? "",
       phone3: settings?.phone3 ?? "",
@@ -67,6 +73,8 @@ export function SettingsForm({ settings }: { settings: SiteSettings | null }) {
       checkOut: settings?.checkOut ?? "",
     },
   });
+
+  const heroImage = watch("heroImage");
 
   async function onSubmit(values: SettingsInput) {
     const res = await updateSettings(values);
@@ -101,6 +109,34 @@ export function SettingsForm({ settings }: { settings: SiteSettings | null }) {
         <div className="grid gap-1.5">
           <Label htmlFor="heroSubtitleBn">Hero subtitle (BN)</Label>
           <textarea id="heroSubtitleBn" rows={2} className={ta} {...register("heroSubtitleBn")} />
+        </div>
+        <div className="grid gap-1.5">
+          <Label>Hero image</Label>
+          {heroImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={heroImage} alt="" className="aspect-[16/9] w-full rounded-lg object-cover" />
+          ) : null}
+          <div className="flex items-center gap-2">
+            <ImageUploader folder="hero" onUploaded={(url) => setValue("heroImage", url)} />
+            {heroImage ? (
+              <Button type="button" variant="outline" onClick={() => setValue("heroImage", "")}>
+                Remove
+              </Button>
+            ) : null}
+          </div>
+          <input type="hidden" {...register("heroImage")} />
+        </div>
+      </section>
+
+      <section className="grid gap-3 rounded-2xl border border-line bg-paper-raised p-5">
+        <h3 className="font-display text-lg text-ink">About</h3>
+        <div className="grid gap-1.5">
+          <Label htmlFor="aboutEn">About (EN)</Label>
+          <textarea id="aboutEn" rows={4} className={ta} {...register("aboutEn")} />
+        </div>
+        <div className="grid gap-1.5">
+          <Label htmlFor="aboutBn">About (BN)</Label>
+          <textarea id="aboutBn" rows={4} className={ta} {...register("aboutBn")} />
         </div>
       </section>
 

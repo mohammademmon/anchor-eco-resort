@@ -17,6 +17,8 @@ const blank: RoomInput = {
   slug: "",
   nameEn: "",
   nameBn: "",
+  shortEn: "",
+  shortBn: "",
   descriptionEn: "",
   descriptionBn: "",
   view: "",
@@ -60,6 +62,8 @@ export function RoomsManager({
       slug: r.slug,
       nameEn: r.nameEn,
       nameBn: r.nameBn,
+      shortEn: r.shortEn ?? "",
+      shortBn: r.shortBn ?? "",
       descriptionEn: r.descriptionEn,
       descriptionBn: r.descriptionBn,
       view: r.view,
@@ -167,6 +171,16 @@ export function RoomsManager({
           <div className="grid gap-1.5">
             <Label htmlFor="rm-nameBn">Name (BN)</Label>
             <Input id="rm-nameBn" {...register("nameBn")} />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="grid gap-1.5">
+            <Label htmlFor="rm-shortEn">Short (EN)</Label>
+            <Input id="rm-shortEn" {...register("shortEn")} />
+          </div>
+          <div className="grid gap-1.5">
+            <Label htmlFor="rm-shortBn">Short (BN)</Label>
+            <Input id="rm-shortBn" {...register("shortBn")} />
           </div>
         </div>
         <div className="grid gap-1.5">

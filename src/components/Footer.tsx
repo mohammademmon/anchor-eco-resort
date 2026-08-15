@@ -29,7 +29,8 @@ export async function Footer({ settings }: { settings: SiteSettings | null }) {
     <footer className="mt-auto border-t border-line bg-paper-raised">
       <Container className="grid gap-10 py-16 md:grid-cols-3">
         <section aria-label={t("contactHeading")}>
-          <h2 className="mb-3 font-display text-lg text-ink">{brand}</h2>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.svg" alt={brand} className="mb-3 h-10 w-auto" />
           <p className="text-sm text-ink-soft">{tagline}</p>
           <dl className="mt-4 space-y-1 text-sm text-ink-soft">
             <div>
@@ -99,7 +100,7 @@ export async function Footer({ settings }: { settings: SiteSettings | null }) {
       <div className="border-t border-line py-6">
         <Container>
           <p className="text-center text-xs text-ink-soft">
-            © {year} {brand}. {t("rights")}
+            {t("rights", { year })}
           </p>
         </Container>
       </div>

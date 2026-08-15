@@ -14,8 +14,9 @@ export async function Navbar({ settings }: { settings: SiteSettings | null }) {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur">
       <Container className="flex flex-wrap items-center gap-x-6 gap-y-3 py-4">
-        <Link href="/" className="font-display text-lg text-ink">
-          {brand}
+        <Link href="/" aria-label={brand} className="shrink-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.svg" alt={brand} className="h-9 w-auto" />
         </Link>
 
         <nav aria-label="Primary" className="flex-1">

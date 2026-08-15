@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import {
@@ -17,6 +18,16 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { Placeholder } from "@/components/Placeholder";
 import { RoomCard } from "@/components/RoomCard";
 import { OfferCard } from "@/components/OfferCard";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Seo" });
+  return { title: t("home.title"), description: t("home.description") };
+}
 
 export default async function HomePage({
   params,
@@ -67,14 +78,22 @@ export default async function HomePage({
               {t("hero.ctaExplore")}
             </Link>
           </div>
+          {settings?.heroImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={settings.heroImage}
+              alt={heroTitle}
+              className="mx-auto mt-10 max-h-[520px] w-full max-w-5xl rounded-2xl object-cover"
+            />
+          ) : null}
         </Container>
       </section>
 
       {/* Eco Story */}
       <PageSection id="eco-story" label={t("ecoStory.title")}>
         <SectionHeader eyebrow={t("ecoStory.eyebrow")} title={t("ecoStory.title")} />
-        <p className="max-w-[65ch] text-ink-soft">
-          {loc(settings?.taglineEn, settings?.taglineBn, locale) || t("ecoStory.body")}
+        <p className="max-w-[65ch] whitespace-pre-line text-ink-soft">
+          {loc(settings?.aboutEn, settings?.aboutBn, locale) || t("ecoStory.body")}
         </p>
       </PageSection>
 
@@ -93,7 +112,7 @@ export default async function HomePage({
                 slug={r.slug}
                 name={loc(r.nameEn, r.nameBn, locale)}
                 view={r.view}
-                blurb={loc(r.descriptionEn, r.descriptionBn, locale)}
+                blurb={loc(r.shortEn, r.shortBn, locale) || loc(r.descriptionEn, r.descriptionBn, locale)}
                 price={roomPrice(r.weekdayRate, r.weekendRate, perNight)}
                 image={r.images?.[0]}
                 imageLabel={tc("imageLabel")}
@@ -111,8 +130,11 @@ export default async function HomePage({
         <SectionHeader eyebrow={t("amenities.eyebrow")} title={t("amenities.title")} />
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {amenities.map((a) => (
-            <li key={a.id} className="rounded-xl border border-line bg-paper-raised p-4 text-ink">
-              {loc(a.nameEn, a.nameBn, locale)}
+            <li key={a.id} className="rounded-xl border border-line bg-paper-raised p-4">
+              <p className="font-medium text-ink">{loc(a.nameEn, a.nameBn, locale)}</p>
+              {loc(a.noteEn, a.noteBn, locale) ? (
+                <p className="mt-1 text-sm text-ink-soft">{loc(a.noteEn, a.noteBn, locale)}</p>
+              ) : null}
             </li>
           ))}
         </ul>

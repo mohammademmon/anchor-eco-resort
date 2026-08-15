@@ -59,6 +59,8 @@ export async function getAmenitiesForRoom(roomId: string) {
       id: amenities.id,
       nameEn: amenities.nameEn,
       nameBn: amenities.nameBn,
+      noteEn: amenities.noteEn,
+      noteBn: amenities.noteBn,
     })
     .from(roomAmenities)
     .innerJoin(amenities, eq(roomAmenities.amenityId, amenities.id))

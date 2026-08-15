@@ -92,8 +92,11 @@ export default async function RoomDetailPage({
         {amenities.length ? (
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {amenities.map((a) => (
-              <li key={a.id} className="rounded-xl border border-line bg-paper-raised p-4 text-ink">
-                {loc(a.nameEn, a.nameBn, locale)}
+              <li key={a.id} className="rounded-xl border border-line bg-paper-raised p-4">
+                <p className="font-medium text-ink">{loc(a.nameEn, a.nameBn, locale)}</p>
+                {loc(a.noteEn, a.noteBn, locale) ? (
+                  <p className="mt-1 text-sm text-ink-soft">{loc(a.noteEn, a.noteBn, locale)}</p>
+                ) : null}
               </li>
             ))}
           </ul>
