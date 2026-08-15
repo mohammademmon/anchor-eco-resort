@@ -60,6 +60,11 @@ export default async function LocaleLayout({
       className={`${fontVars} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-body">
+        {/* Scroll-reveals start at opacity:0 in the SSR markup; if JS never
+            runs, show them anyway rather than leaving the page blank. */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
         <NextIntlClientProvider>
           <SmoothScroll />
           <Navbar brand={brand} whatsapp={settings?.whatsapp} />

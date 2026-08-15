@@ -52,9 +52,11 @@
       "ctaExplore": "View Rooms"
     },
     "ecoStory": {
-      "eyebrow": "Our story",
+      "eyebrow": "Our place",
       "title": "Where the forest meets the sea",
-      "body": "A calm, unhurried eco-retreat on the southern shore of Cox's Bazar."
+      "body": "A calm, unhurried eco-retreat on the southern shore of Cox's Bazar.",
+      "pillars": ["Beachfront", "Infinity Pool", "Eco Gardens"],
+      "imageAlt": "Monstera and palm foliage beside a still pool in soft morning light"
     },
     "featuredRooms": {
       "eyebrow": "Stay with us",

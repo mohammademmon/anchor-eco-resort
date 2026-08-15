@@ -13,6 +13,7 @@ import {
 import { loc } from "@/lib/i18n-content";
 import { roomPrice } from "@/lib/format";
 import { Hero } from "@/components/Hero";
+import { EcoStory } from "@/components/EcoStory";
 import { PageSection } from "@/components/PageSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Placeholder } from "@/components/Placeholder";
@@ -67,13 +68,11 @@ export default async function HomePage({
         whatsapp={settings?.whatsapp}
       />
 
-      {/* Eco Story */}
-      <PageSection id="eco-story" label={t("ecoStory.title")}>
-        <SectionHeader eyebrow={t("ecoStory.eyebrow")} title={t("ecoStory.title")} />
-        <p className="max-w-[65ch] whitespace-pre-line text-ink-soft">
-          {loc(settings?.aboutEn, settings?.aboutBn, locale) || t("ecoStory.body")}
-        </p>
-      </PageSection>
+      <EcoStory
+        body={
+          loc(settings?.aboutEn, settings?.aboutBn, locale) || t("ecoStory.body")
+        }
+      />
 
       {/* Featured Rooms */}
       <PageSection id="featured-rooms" label={t("featuredRooms.title")}>
