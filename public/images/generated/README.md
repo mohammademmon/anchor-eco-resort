@@ -1,10 +1,18 @@
-# Generated / ambient images (Phase 2.5)
+# Generated / ambient images
 
-Destination for the 6 illustrative "mood" images used in **secondary** sections
-only (never labelled as specific rooms):
-`dining-mood`, `spa-mood`, `nature-leaves-pool`, `beach-detail`,
-`material-texture-flatlay`, `pool-golden-hour`.
+Illustrative **mood/detail** imagery (Higgsfield, ~2K) for **secondary** sections
+only — never present these as specific rooms. Downloaded from the URLs in
+`IMAGE-SOURCES.md` (resort owner's Higgsfield CDN; re-render there if a link
+expires).
 
-These were to be downloaded from the URLs in `IMAGE-SOURCES.md`, which was **not
-included** in the asset drop. Add that file (or the 6 image URLs) and drop the
-files here, or generate tasteful fillers, before Phase 3 design uses them.
+| File | Intended use |
+|------|--------------|
+| dining-mood.png | Dining / Ocean Kitchen section; offers band background |
+| spa-mood.png | Spa / wellness amenity block |
+| nature-leaves-pool.png | Eco-story section; section divider |
+| beach-detail.png | Location / beach section; About |
+| material-texture-flatlay.png | Section background band; card texture |
+| pool-golden-hour.png | Secondary hero / CTA band; offers |
+
+These are placed here for **Phase 3 (design)** to use; the plain Phase 2.5 pages
+do not reference them yet.
