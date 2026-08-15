@@ -14,6 +14,7 @@ import { loc } from "@/lib/i18n-content";
 import { roomPrice } from "@/lib/format";
 import { Hero } from "@/components/Hero";
 import { EcoStory } from "@/components/EcoStory";
+import { FeaturedRooms } from "@/components/FeaturedRooms";
 import { PageSection } from "@/components/PageSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Placeholder } from "@/components/Placeholder";
@@ -74,33 +75,7 @@ export default async function HomePage({
         }
       />
 
-      {/* Featured Rooms */}
-      <PageSection id="featured-rooms" label={t("featuredRooms.title")}>
-        <SectionHeader
-          eyebrow={t("featuredRooms.eyebrow")}
-          title={t("featuredRooms.title")}
-          intro={t("featuredRooms.intro")}
-        />
-        {rooms.length ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-            {rooms.map((r) => (
-              <RoomCard
-                key={r.id}
-                slug={r.slug}
-                name={loc(r.nameEn, r.nameBn, locale)}
-                view={r.view}
-                blurb={loc(r.shortEn, r.shortBn, locale) || loc(r.descriptionEn, r.descriptionBn, locale)}
-                price={roomPrice(r.weekdayRate, r.weekendRate, perNight)}
-                image={r.images?.[0]}
-                imageLabel={tc("imageLabel")}
-                viewDetails={tc("viewDetails")}
-              />
-            ))}
-          </div>
-        ) : (
-          <p className="text-ink-soft">{tc("imageLabel")}</p>
-        )}
-      </PageSection>
+      <FeaturedRooms rooms={rooms} locale={locale} />
 
       {/* Amenities */}
       <PageSection id="amenities" label={t("amenities.title")}>

@@ -9,7 +9,8 @@
     "viewAll": "View all",
     "sending": "Sending…",
     "formSuccess": "Thank you — we've received your request and will confirm shortly on WhatsApp or phone.",
-    "formError": "Something went wrong. Please try again, or reach us on WhatsApp."
+    "formError": "Something went wrong. Please try again, or reach us on WhatsApp.",
+    "fromPrice": "from {price} / night"
   },
   "Nav": {
     "home": "Home",
@@ -65,7 +66,8 @@
     "featuredRooms": {
       "eyebrow": "Stay with us",
       "title": "Rooms & Cottages",
-      "intro": "Four ways to stay — from sea-view rooms to a private thatched cottage."
+      "intro": "Four ways to stay — from sea-view rooms to a private thatched cottage.",
+      "viewAll": "View all rooms"
     },
     "amenities": {
       "eyebrow": "The resort",
@@ -97,6 +99,11 @@
       "eyebrow": "Stay with us",
       "title": "Rooms & Cottages",
       "intro": "Four ways to stay — from sea-view rooms to a private thatched cottage."
+    },
+    "views": {
+      "sea": "Sea View",
+      "hill": "Hill Side",
+      "cottage": "Garden Cottage"
     }
   },
   "RoomDetail": {

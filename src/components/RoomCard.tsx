@@ -1,49 +1,95 @@
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { Placeholder } from "@/components/Placeholder";
+import { cn } from "@/lib/utils";
 
-// Room card — links to the room detail page. Renders a real image when present.
+/**
+ * Room card (design system §7). Shared by the homepage featured grid and the
+ * /rooms listing — one card, two places.
+ *
+ * Uses the stretched-link pattern: the whole card is clickable, but only the
+ * room name is a real link, so the accessibility tree gets one clean tab stop
+ * named after the room rather than a link wrapping every scrap of card content.
+ * The focus ring is drawn on the card, not the name.
+ */
 export function RoomCard({
   slug,
   name,
   view,
-  blurb,
+  short,
   price,
   image,
-  imageLabel,
-  viewDetails,
+  className,
 }: {
   slug: string;
   name: string;
-  view: string;
-  blurb: string;
-  price: string;
+  /** Already-localised view label, e.g. "Sea View" */
+  view?: string;
+  short?: string;
+  /** Already-formatted, e.g. "from ৳5,400 / night" */
+  price?: string;
   image?: string | null;
-  imageLabel: string;
-  viewDetails: string;
+  className?: string;
 }) {
   return (
-    <article className="flex flex-col overflow-hidden rounded-2xl border border-line bg-paper-raised">
-      {image ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={image} alt={name} className="aspect-[4/3] w-full object-cover" />
-      ) : (
-        <Placeholder label={imageLabel} className="rounded-none border-0" />
+    <article
+      className={cn(
+        "group relative flex flex-col rounded-2xl",
+        "has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-teal has-[a:focus-visible]:ring-offset-4 has-[a:focus-visible]:ring-offset-paper",
+        className,
       )}
-      <div className="flex flex-1 flex-col gap-2 p-5">
+    >
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-sand transition-shadow duration-[400ms] group-hover:shadow-lift">
+        {image ? (
+          <Image
+            src={image}
+            alt={name}
+            fill
+            sizes="(min-width: 640px) 50vw, 100vw"
+            className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+          />
+        ) : (
+          // Not every room type has photography yet. A quiet branded panel
+          // reads as intentional, where an empty box reads as broken.
+          <div className="flex size-full items-center justify-center bg-sand">
+            <svg
+              viewBox="0 0 60 44"
+              aria-hidden="true"
+              className="w-12 text-moss/35"
+              fill="currentColor"
+            >
+              <path d="M30 3 L43 26 L30 26 Z" />
+              <path d="M28 7 L17 26 L28 26 Z" opacity="0.6" />
+              <path d="M12 29 Q30 39 48 29 L44 34 Q30 39 16 34 Z" />
+            </svg>
+          </div>
+        )}
+
         {view ? (
-          <p className="text-xs font-medium uppercase tracking-[0.14em] text-teal">
+          <span className="absolute left-4 top-4 rounded-full bg-paper/90 px-3 py-1.5 text-eyebrow font-medium uppercase text-ink backdrop-blur-sm">
             {view}
+          </span>
+        ) : null}
+      </div>
+
+      <div className="flex flex-1 flex-col px-1 pt-5">
+        <h3 className="font-display text-h3 text-ink">
+          <Link
+            href={`/rooms/${slug}`}
+            className="underline-offset-4 outline-none after:absolute after:inset-0 after:rounded-2xl group-hover:underline"
+          >
+            {name}
+          </Link>
+        </h3>
+
+        {short ? (
+          <p className="mt-2 text-small text-ink-soft">{short}</p>
+        ) : null}
+
+        {price ? (
+          <p className="mt-auto pt-5 font-display text-body-lg font-medium text-ink">
+            {price}
           </p>
         ) : null}
-        <h3 className="font-display text-xl text-ink">{name}</h3>
-        {blurb ? <p className="text-sm text-ink-soft">{blurb}</p> : null}
-        <p className="mt-auto pt-2 text-ink">{price}</p>
-        <Link
-          href={`/rooms/${slug}`}
-          className="text-sm font-medium text-forest underline-offset-4 hover:underline"
-        >
-          {viewDetails} →
-        </Link>
       </div>
     </article>
   );
