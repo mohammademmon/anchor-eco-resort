@@ -1,5 +1,284 @@
 {
+  "Common": {
+    "resortName": "Anchor Eco Resort & Spa",
+    "imageLabel": "Image placeholder",
+    "mapPlaceholder": "Map placeholder",
+    "viewDetails": "View details",
+    "learnMore": "Learn more",
+    "viewAll": "View all",
+    "notWired": "This form is a placeholder — not connected yet (Phase 2)."
+  },
+  "Nav": {
+    "home": "Home",
+    "rooms": "Rooms",
+    "offers": "Offers",
+    "gallery": "Gallery",
+    "about": "About",
+    "contact": "Contact",
+    "book": "Book",
+    "admin": "Admin"
+  },
+  "WhatsApp": {
+    "label": "Book on WhatsApp",
+    "aria": "Chat with us on WhatsApp"
+  },
+  "Footer": {
+    "tagline": "Placeholder tagline — an eco-luxe retreat by the sea.",
+    "contactHeading": "Contact",
+    "linksHeading": "Explore",
+    "socialHeading": "Follow us",
+    "phoneLabel": "Phone",
+    "addressLabel": "Address",
+    "phone1": "+880 1897 629200",
+    "phone2": "+880 0000 000000",
+    "address": "Placeholder address, Cox’s Bazar, Bangladesh",
+    "socialFacebook": "Facebook (placeholder)",
+    "socialInstagram": "Instagram (placeholder)",
+    "socialYoutube": "YouTube (placeholder)",
+    "rights": "All rights reserved."
+  },
   "Home": {
-    "title": "Anchor Eco Resort & Spa"
+    "hero": {
+      "eyebrow": "Eco-luxe retreat",
+      "title": "Anchor Eco Resort & Spa",
+      "subtitle": "Placeholder hero subtitle — a calm, natural escape by the sea.",
+      "ctaBook": "Book your stay",
+      "ctaExplore": "Explore rooms"
+    },
+    "ecoStory": {
+      "eyebrow": "Our story",
+      "title": "Eco Story",
+      "body": "Placeholder: the eco story goes here — our commitment to nature, sustainability, and calm luxury."
+    },
+    "featuredRooms": {
+      "eyebrow": "Stay",
+      "title": "Featured Rooms",
+      "intro": "Placeholder intro for the featured rooms selection."
+    },
+    "amenities": {
+      "eyebrow": "Facilities",
+      "title": "Amenities",
+      "items": [
+        "Infinity pool (placeholder)",
+        "Spa & wellness (placeholder)",
+        "Beachfront access (placeholder)",
+        "Restaurant & bar (placeholder)",
+        "Free Wi-Fi (placeholder)",
+        "Guided eco tours (placeholder)"
+      ]
+    },
+    "offers": {
+      "eyebrow": "Deals",
+      "title": "Offers",
+      "intro": "Placeholder intro for current offers and packages."
+    },
+    "gallery": {
+      "eyebrow": "Moments",
+      "title": "Gallery",
+      "intro": "Placeholder intro for the photo gallery."
+    },
+    "reviews": {
+      "eyebrow": "Guests",
+      "title": "Reviews",
+      "items": [
+        { "quote": "Placeholder guest review one.", "author": "Guest A" },
+        { "quote": "Placeholder guest review two.", "author": "Guest B" },
+        { "quote": "Placeholder guest review three.", "author": "Guest C" }
+      ]
+    },
+    "location": {
+      "eyebrow": "Find us",
+      "title": "Location",
+      "address": "Placeholder address, Cox’s Bazar, Bangladesh",
+      "directions": "Placeholder directions and travel notes go here."
+    }
+  },
+  "Rooms": {
+    "header": {
+      "eyebrow": "Accommodation",
+      "title": "Rooms & Cottages",
+      "intro": "Placeholder intro — four room types to choose from."
+    },
+    "items": {
+      "super-deluxe-hill-side": {
+        "name": "Super Deluxe — Hill Side",
+        "view": "Hill Side",
+        "blurb": "Placeholder one-line description for the hill-side super deluxe.",
+        "price": "from ৳5,400 / night"
+      },
+      "super-deluxe-sea-view": {
+        "name": "Super Deluxe — Sea View",
+        "view": "Sea View",
+        "blurb": "Placeholder one-line description for the sea-view super deluxe.",
+        "price": "from ৳6,200 / night"
+      },
+      "premium-executive-cottage": {
+        "name": "Premium Executive Cottage",
+        "view": "Garden Cottage",
+        "blurb": "Placeholder one-line description for the executive cottage.",
+        "price": "from ৳7,800 / night"
+      },
+      "premium-deluxe-sea-view": {
+        "name": "Premium Deluxe — Sea View",
+        "view": "Sea View",
+        "blurb": "Placeholder one-line description for the premium deluxe sea view.",
+        "price": "from ৳8,500 / night"
+      }
+    }
+  },
+  "RoomDetail": {
+    "gallery": "Gallery",
+    "overview": "Overview",
+    "details": "Details",
+    "back": "Back to rooms",
+    "occupancy": "Occupancy",
+    "occupancyValue": "2 adults · 1 child (placeholder)",
+    "size": "Size",
+    "sizeValue": "— m² (placeholder)",
+    "rate": "Rate",
+    "amenities": {
+      "title": "Amenities",
+      "items": [
+        "Air conditioning (placeholder)",
+        "Private balcony (placeholder)",
+        "Ensuite bathroom (placeholder)",
+        "Free Wi-Fi (placeholder)",
+        "Daily housekeeping (placeholder)",
+        "Tea & coffee (placeholder)"
+      ]
+    },
+    "booking": "Book this room",
+    "bookingIntro": "Placeholder — booking flow arrives in Phase 2.",
+    "bookCta": "Book this room"
+  },
+  "Offers": {
+    "header": {
+      "eyebrow": "Deals",
+      "title": "Offers & Packages",
+      "intro": "Placeholder intro for offers and seasonal packages."
+    },
+    "items": {
+      "winter-escape": {
+        "title": "Winter Escape",
+        "badge": "Seasonal",
+        "blurb": "Placeholder description for the winter escape package.",
+        "price": "from ৳12,000"
+      },
+      "honeymoon-retreat": {
+        "title": "Honeymoon Retreat",
+        "badge": "Couples",
+        "blurb": "Placeholder description for the honeymoon retreat package.",
+        "price": "from ৳18,000"
+      },
+      "long-stay-saver": {
+        "title": "Long-Stay Saver",
+        "badge": "Value",
+        "blurb": "Placeholder description for the long-stay saver package.",
+        "price": "from ৳30,000"
+      }
+    }
+  },
+  "Gallery": {
+    "header": {
+      "eyebrow": "Moments",
+      "title": "Gallery",
+      "intro": "Placeholder intro — filter the gallery by category (non-functional in Phase 1)."
+    },
+    "all": "All",
+    "categories": {
+      "pool": "Pool",
+      "rooms": "Rooms",
+      "dining": "Dining",
+      "beach": "Beach",
+      "garden": "Garden",
+      "spa": "Spa"
+    }
+  },
+  "About": {
+    "header": {
+      "eyebrow": "About us",
+      "title": "About Anchor Eco Resort",
+      "intro": "Placeholder intro for the about page."
+    },
+    "story": {
+      "eyebrow": "Our story",
+      "title": "Our Story",
+      "body": "Placeholder: the story of how the resort came to be."
+    },
+    "eco": {
+      "eyebrow": "Sustainability",
+      "title": "Eco Commitment",
+      "body": "Placeholder: our environmental commitments and practices."
+    },
+    "experience": {
+      "eyebrow": "Stay with us",
+      "title": "The Experience",
+      "body": "Placeholder: what a stay with us feels like."
+    }
+  },
+  "Contact": {
+    "header": {
+      "eyebrow": "Get in touch",
+      "title": "Contact Us",
+      "intro": "Placeholder intro for the contact page."
+    },
+    "infoHeading": "Contact information",
+    "phoneLabel": "Phone",
+    "phone": "+880 1897 629200 (placeholder)",
+    "emailLabel": "Email",
+    "email": "hello@example.com (placeholder)",
+    "addressLabel": "Address",
+    "address": "Placeholder address, Cox’s Bazar, Bangladesh",
+    "mapLabel": "Map placeholder",
+    "form": {
+      "heading": "Send an inquiry",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "submit": "Send inquiry"
+    }
+  },
+  "Book": {
+    "header": {
+      "eyebrow": "Reserve",
+      "title": "Booking Inquiry",
+      "intro": "Placeholder intro — structure only, not connected yet (Phase 2)."
+    },
+    "form": {
+      "room": "Room",
+      "selectRoom": "Select a room",
+      "checkIn": "Check-in",
+      "checkOut": "Check-out",
+      "adults": "Adults",
+      "children": "Children",
+      "name": "Full name",
+      "phone": "Phone",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send booking inquiry"
+    }
+  },
+  "Admin": {
+    "login": {
+      "title": "Admin Login",
+      "note": "Placeholder — no authentication yet (Phase 2).",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "viewDashboard": "View dashboard shell"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "empty": "No data yet — placeholder panel (Phase 2).",
+      "nav": {
+        "bookings": "Bookings",
+        "rooms": "Rooms",
+        "offers": "Offers",
+        "gallery": "Gallery",
+        "reviews": "Reviews",
+        "settings": "Settings"
+      }
+    }
   }
 }

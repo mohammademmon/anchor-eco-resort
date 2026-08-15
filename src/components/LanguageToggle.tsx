@@ -10,13 +10,14 @@ const LABELS: Record<string, string> = {
   bn: "বাংলা",
 };
 
-export function LanguageSwitcher() {
+// Working EN/BN toggle — preserves the current pathname across locales.
+export function LanguageToggle() {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
 
   return (
-    <div className="flex items-center gap-2" role="group" aria-label="Language">
+    <div className="flex items-center gap-1" role="group" aria-label="Language">
       {routing.locales.map((l) => {
         const active = l === locale;
         return (

@@ -1,0 +1,16 @@
+import { cn } from "@/lib/utils";
+
+// Structural page container per the design system: max-w 1280, responsive gutters.
+export function Container({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={cn("mx-auto w-full max-w-[1280px] px-6 md:px-10", className)}>
+      {children}
+    </div>
+  );
+}

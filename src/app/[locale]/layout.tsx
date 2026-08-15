@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Toaster } from "@/components/ui/sonner";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { routing } from "@/i18n/routing";
 import { display, body, bnDisplay, bnBody } from "../fonts";
 import "../globals.css";
@@ -37,8 +40,13 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${fontVars} h-full antialiased`}>
-      <body className={`min-h-full flex flex-col ${bodyFont}`}>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+      <body className={`flex min-h-full flex-col ${bodyFont}`}>
+        <NextIntlClientProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <WhatsAppButton variant="floating" />
+        </NextIntlClientProvider>
         <Toaster />
       </body>
     </html>
