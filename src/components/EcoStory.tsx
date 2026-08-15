@@ -4,10 +4,15 @@ import { useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { Container } from "@/components/Container";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Reveal } from "@/components/Reveal";
 
+/**
+ * The forest-night immersive band (design system §2). Full-bleed: the copy sits
+ * on `night`, the photograph runs off the right edge of the viewport and melts
+ * into the panel — no card, no border, no rounded box. Sits between the bright
+ * hero and the light rooms grid to give the page its rhythm.
+ */
 export function EcoStory({ body }: { body: string }) {
   const t = useTranslations("Home.ecoStory");
   const sectionRef = useRef<HTMLElement>(null);
@@ -19,98 +24,77 @@ export function EcoStory({ body }: { body: string }) {
     target: sectionRef,
     offset: ["start end", "end start"],
   });
-  // Counter-drifting layers — the depth cue that makes the diptych feel built
-  // rather than pasted. Max 8% (§6), disabled under reduced motion.
-  const forestY = useTransform(scrollYProgress, [0, 1], ["-4%", "4%"]);
-  const seaY = useTransform(scrollYProgress, [0, 1], ["6%", "-6%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
 
   return (
     <section
       ref={sectionRef}
       id="eco-story"
       aria-label={t("title")}
-      className="bg-gradient-to-b from-paper to-sand/30 py-24 md:py-32 lg:py-40"
+      className="relative bg-night"
     >
-      <Container>
-        <div className="grid items-center gap-16 lg:grid-cols-12 lg:gap-20">
-          {/* Copy — narrow, editorial measure */}
-          <div className="lg:col-span-5">
-            <Reveal>
-              <SectionHeader
-                eyebrow={t("eyebrow")}
-                title={t("title")}
-                size="h1"
-              />
-            </Reveal>
+      <div className="grid lg:grid-cols-[1fr_48vw]">
+        {/* Copy — aligned to the site container gutter, then given room.
+            On phones it follows the photograph; on desktop it leads on the left. */}
+        <div className="order-2 px-6 py-24 md:px-10 md:py-32 lg:order-1 lg:py-40 lg:pl-[max(2.5rem,calc((100vw-1280px)/2+2.5rem))] lg:pr-20">
+          <Reveal>
+            <SectionHeader
+              eyebrow={t("eyebrow")}
+              title={t("title")}
+              size="h1"
+              tone="dark"
+            />
+          </Reveal>
 
-            <Reveal delay={0.1}>
-              <p className="mt-8 max-w-[48ch] whitespace-pre-line text-body-lg text-ink-soft">
-                {body}
-              </p>
-            </Reveal>
-          </div>
+          <Reveal delay={0.1}>
+            <p className="mt-8 max-w-[46ch] whitespace-pre-line text-body-lg text-on-night-soft">
+              {body}
+            </p>
+          </Reveal>
 
-          {/* Diptych: forest above, sea overlapping — the two halves of the
-              heading, shown rather than stated. */}
-          <Reveal delay={0.15} className="lg:col-span-7">
-            <div className="relative">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-soft lg:aspect-[4/5]">
-                <motion.div
-                  className="absolute inset-0"
-                  style={reduceMotion ? undefined : { y: forestY, scale: 1.08 }}
-                >
-                  <Image
-                    src="/images/generated/nature-leaves-pool.png"
-                    alt={t("imageAlt")}
-                    fill
-                    sizes="(min-width: 1024px) 55vw, 100vw"
-                    className="object-cover"
-                  />
-                </motion.div>
-              </div>
-
-              {/* Sea detail, layered over the corner */}
-              <div className="relative z-10 -mt-16 ml-auto w-2/3 sm:w-3/5 lg:absolute lg:-bottom-12 lg:-left-12 lg:ml-0 lg:mt-0 lg:w-[48%]">
-                <div className="relative aspect-[5/4] overflow-hidden rounded-2xl shadow-lift ring-1 ring-paper/60">
-                  <motion.div
-                    className="absolute inset-0"
-                    style={reduceMotion ? undefined : { y: seaY, scale: 1.1 }}
-                  >
-                    <Image
-                      src="/images/generated/beach-detail.png"
-                      alt={t("imageAltSea")}
-                      fill
-                      sizes="(min-width: 1024px) 28vw, 66vw"
-                      // 16:9 source into a 5:4 box crops horizontally, so the
-                      // framing shifts left — onto the surf line rather than a
-                      // block of sand
-                      className="object-cover object-[30%_50%]"
-                    />
-                  </motion.div>
-                </div>
-              </div>
-            </div>
+          {/* Quiet index of the place — gold stays a hairline only (§2) */}
+          <Reveal delay={0.2}>
+            <ul className="mt-14 grid max-w-[34rem] gap-8 sm:grid-cols-3">
+              {pillars.map((pillar, i) => (
+                <li key={pillar}>
+                  <div className="flex items-center gap-3">
+                    <span className="text-small tabular-nums text-on-night-soft">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span aria-hidden="true" className="h-px flex-1 bg-gold/60" />
+                  </div>
+                  <p className="mt-4 font-display text-h3 text-on-night">
+                    {pillar}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
 
-        {/* Numbered band — a quiet index of what the place is, opened by a
-            hairline. Gold stays a rule only, never a fill (§2). */}
-        <Reveal delay={0.2}>
-          <ul className="mt-24 grid gap-12 border-t border-line pt-12 sm:grid-cols-3 sm:gap-8 lg:mt-32">
-            {pillars.map((pillar, i) => (
-              <li key={pillar}>
-                <div className="flex items-center gap-4">
-                  <span className="text-small tabular-nums text-ink-soft">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span aria-hidden="true" className="h-px flex-1 bg-gold/70" />
-                </div>
-                <p className="mt-5 font-display text-h3 text-ink">{pillar}</p>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-      </Container>
+        {/* Photograph — bleeds off the right edge, blended into the panel */}
+        <div className="relative order-1 min-h-[56vh] overflow-hidden lg:order-2 lg:min-h-full">
+          <motion.div
+            className="absolute inset-0"
+            style={reduceMotion ? undefined : { y, scale: 1.1 }}
+          >
+            <Image
+              src="/images/generated/pool-golden-hour.png"
+              alt={t("imageAlt")}
+              fill
+              sizes="(min-width: 1024px) 48vw, 100vw"
+              className="object-cover"
+            />
+          </motion.div>
+          {/* Soft blend so the photo dissolves into the night panel rather than
+              sitting in a frame — bottom edge on mobile (copy sits below),
+              left edge on desktop (copy sits beside). */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-night via-night/10 to-transparent lg:bg-gradient-to-r lg:from-night lg:via-night/20 lg:to-transparent"
+          />
+        </div>
+      </div>
     </section>
   );
 }

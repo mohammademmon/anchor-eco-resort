@@ -1,9 +1,12 @@
 import { cn } from "@/lib/utils";
 
 /**
- * The signature section opener (design system §7): eyebrow (teal, uppercase,
- * wide tracking) → display-serif heading → optional body-lg intro.
- * Left-aligned by default; centrepieces may centre.
+ * The signature section opener (design system §7): eyebrow → display-serif
+ * heading → optional body-lg intro.
+ *
+ * `tone="dark"` is for the forest-night immersive bands (§2). On night the
+ * eyebrow can use gold (5.3:1) — on paper it must not, so the light tone uses
+ * moss (4.9:1) instead of teal (4.0:1, below AA).
  */
 export function SectionHeader({
   eyebrow,
@@ -11,6 +14,7 @@ export function SectionHeader({
   intro,
   as = "h2",
   size,
+  tone = "light",
   align = "left",
   className,
 }: {
@@ -18,13 +22,14 @@ export function SectionHeader({
   title: string;
   intro?: string;
   as?: "h1" | "h2";
-  /** Visual scale, independent of the heading level. Centrepiece sections may
-   *  step up to `h1` scale while staying an <h2> semantically. */
   size?: "h1" | "h2";
+  tone?: "light" | "dark";
   align?: "left" | "center";
   className?: string;
 }) {
   const Heading = as;
+  const dark = tone === "dark";
+
   return (
     <header
       className={cn(
@@ -34,23 +39,34 @@ export function SectionHeader({
       )}
     >
       {eyebrow ? (
-        // `moss`, not `teal`: at 13px the teal token measures 4.04:1 on paper,
-        // under the 4.5:1 AA floor. Moss keeps the natural-green signature at
-        // 4.9:1 (§10 — AA is non-negotiable).
-        <p className="text-eyebrow font-medium uppercase text-moss">{eyebrow}</p>
+        <p
+          className={cn(
+            "text-eyebrow font-medium uppercase",
+            dark ? "text-gold" : "text-moss",
+          )}
+        >
+          {eyebrow}
+        </p>
       ) : null}
       <Heading
         className={cn(
-          // text-balance evens out the line lengths and avoids orphan words
-          "text-balance font-display text-ink",
+          "text-balance font-display",
           (size ?? as) === "h1" ? "text-h1" : "text-h2",
+          dark ? "text-on-night" : "text-ink",
           eyebrow && "mt-4",
         )}
       >
         {title}
       </Heading>
       {intro ? (
-        <p className="mt-5 text-body-lg text-ink-soft">{intro}</p>
+        <p
+          className={cn(
+            "mt-5 text-body-lg",
+            dark ? "text-on-night-soft" : "text-ink-soft",
+          )}
+        >
+          {intro}
+        </p>
       ) : null}
     </header>
   );
