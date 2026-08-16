@@ -68,7 +68,9 @@
       "title": "Rooms & Cottages",
       "intro": "Four ways to stay — from sea-view rooms to a private thatched cottage.",
       "viewAll": "View all rooms",
-      "imageAlt": "The resort's thatched cottages and pool by the sea"
+      "featuredLabel": "Our signature room",
+      "moreLabel": "More rooms & cottages",
+      "imageAlt": "The open Bay of Bengal at golden hour, seen from the resort"
     },
     "amenities": {
       "eyebrow": "The resort",
