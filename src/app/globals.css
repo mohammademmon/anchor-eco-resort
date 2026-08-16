@@ -296,3 +296,29 @@ html[data-lang="bn"] .text-h2 {
     opacity: 1;
   }
 }
+
+/* Cinematic "Ken Burns" drift for the full-screen room scenes (§8). A slow,
+   perpetual breathing zoom that makes a still photograph feel alive. The layer
+   is over-scanned (min scale 1.12) so the Framer scroll-parallax on its parent
+   never exposes an edge. Origin is per-image via --kb-origin. Motion-off users
+   get a static, gently-scaled frame. */
+@keyframes anchor-kenburns {
+  from {
+    transform: scale(1.12);
+  }
+  to {
+    transform: scale(1.22);
+  }
+}
+.anchor-kenburns {
+  transform-origin: var(--kb-origin, center);
+  animation: anchor-kenburns 22s var(--ease-signature, ease-in-out) infinite
+    alternate;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anchor-kenburns {
+    animation: none;
+    transform: scale(1.05);
+  }
+}
