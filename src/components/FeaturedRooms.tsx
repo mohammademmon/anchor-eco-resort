@@ -1,9 +1,9 @@
 import { getTranslations } from "next-intl/server";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import type { Room } from "@/lib/db/schema";
 import { loc } from "@/lib/i18n-content";
 import { taka } from "@/lib/format";
-import { cn } from "@/lib/utils";
 import { Container } from "@/components/Container";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Reveal } from "@/components/Reveal";
@@ -12,17 +12,20 @@ import { RoomCard } from "@/components/RoomCard";
 const KNOWN_VIEWS = new Set(["sea", "hill", "cottage"]);
 
 /**
- * Rooms as an editorial collection rather than a uniform card grid: spans
- * alternate 7/5 across a 12-column field and every second card drops down a
- * step, so the page reads as a magazine spread instead of a product listing.
- * The wide slot takes a landscape crop, the narrow slot a portrait one.
+ * Rooms as an index, not a showcase. A two-column split on desktop: the header
+ * plus one large atmospheric photograph on the left (which carries the visual
+ * weight), a typographic list of rooms on the right (which carries the detail).
+ * Keeps the section confident without leaning on per-room snapshots that can't
+ * take the scale.
  */
 export async function FeaturedRooms({
   rooms,
   locale,
+  heroImage,
 }: {
   rooms: Room[];
   locale: string;
+  heroImage?: string | null;
 }) {
   const t = await getTranslations("Home.featuredRooms");
   const tc = await getTranslations("Common");
@@ -37,74 +40,81 @@ export async function FeaturedRooms({
       className="bg-paper py-24 md:py-32 lg:py-40"
     >
       <Container>
-        <Reveal>
-          <SectionHeader
-            eyebrow={t("eyebrow")}
-            title={t("title")}
-            intro={t("intro")}
-            size="h1"
-          />
-        </Reveal>
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
+          {/* Left rail: header + anchoring image */}
+          <div className="lg:col-span-4 lg:sticky lg:top-28 lg:self-start">
+            <Reveal>
+              <SectionHeader
+                eyebrow={t("eyebrow")}
+                title={t("title")}
+                intro={t("intro")}
+                size="h1"
+              />
+            </Reveal>
 
-        <ul className="mt-16 grid gap-12 lg:mt-24 lg:grid-cols-12 lg:items-start lg:gap-x-12 lg:gap-y-8">
-          {rooms.map((room, i) => {
-            const wide = i % 4 === 0 || i % 4 === 3;
-            return (
-              <li
-                key={room.id}
-                className={cn(
-                  "flex",
-                  wide ? "lg:col-span-7" : "lg:col-span-5",
-                  // every second card steps down — the stagger that keeps the
-                  // spread from reading as a grid
-                  i % 2 === 1 && "lg:mt-24",
-                )}
-              >
-                <Reveal delay={Math.min(i, 3) * 0.09} className="flex w-full">
-                  <RoomCard
-                    className="w-full"
-                    aspect={wide ? "aspect-[4/3]" : "aspect-[4/5]"}
-                    slug={room.slug}
-                    name={loc(room.nameEn, room.nameBn, locale)}
-                    view={
-                      room.view && KNOWN_VIEWS.has(room.view)
-                        ? tr(`views.${room.view}`)
-                        : room.view || undefined
-                    }
-                    short={
-                      loc(room.shortEn, room.shortBn, locale) ||
-                      loc(room.descriptionEn, room.descriptionBn, locale)
-                    }
-                    price={
-                      room.weekdayRate
-                        ? tc("fromPrice", { price: taka(room.weekdayRate) })
-                        : undefined
-                    }
-                    cta={tc("viewDetails")}
-                    image={room.images?.[0]}
+            {heroImage ? (
+              <Reveal delay={0.1}>
+                <div className="relative mt-10 aspect-[5/4] overflow-hidden rounded-2xl shadow-soft">
+                  <Image
+                    src={heroImage}
+                    alt={t("imageAlt")}
+                    fill
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    className="object-cover"
                   />
-                </Reveal>
-              </li>
-            );
-          })}
-        </ul>
+                </div>
+              </Reveal>
+            ) : null}
 
-        <Reveal delay={0.1}>
-          <div className="mt-20 border-t border-line pt-10 lg:mt-28">
-            <Link
-              href="/rooms"
-              className="group inline-flex min-h-12 items-center gap-2 font-display text-h3 text-ink transition-colors duration-[250ms] hover:text-forest"
-            >
-              {t("viewAll")}
-              <span
-                aria-hidden="true"
-                className="transition-transform duration-[250ms] group-hover:translate-x-1.5"
+            <Reveal delay={0.15}>
+              <Link
+                href="/rooms"
+                className="group mt-10 inline-flex min-h-11 items-center gap-2 text-body font-medium text-forest transition-colors duration-[250ms] hover:text-forest-600"
               >
-                →
-              </span>
-            </Link>
+                {t("viewAll")}
+                <span
+                  aria-hidden="true"
+                  className="transition-transform duration-[250ms] group-hover:translate-x-1.5"
+                >
+                  →
+                </span>
+              </Link>
+            </Reveal>
           </div>
-        </Reveal>
+
+          {/* Right rail: the room index */}
+          <div className="lg:col-span-8">
+            <ul className="border-b border-line">
+              {rooms.map((room, i) => (
+                <li key={room.id}>
+                  <Reveal delay={Math.min(i, 4) * 0.08}>
+                    <RoomCard
+                      index={i + 1}
+                      slug={room.slug}
+                      name={loc(room.nameEn, room.nameBn, locale)}
+                      view={
+                        room.view && KNOWN_VIEWS.has(room.view)
+                          ? tr(`views.${room.view}`)
+                          : room.view || undefined
+                      }
+                      showShort={false}
+                      short={
+                        loc(room.shortEn, room.shortBn, locale) ||
+                        loc(room.descriptionEn, room.descriptionBn, locale)
+                      }
+                      price={
+                        room.weekdayRate
+                          ? tc("fromPrice", { price: taka(room.weekdayRate) })
+                          : undefined
+                      }
+                      image={room.images?.[0]}
+                    />
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </Container>
     </section>
   );

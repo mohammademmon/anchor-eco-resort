@@ -3,67 +3,67 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 /**
- * Room card (design system §7). Shared by the homepage collection and the
- * /rooms listing — one card, two places.
+ * A room as an editorial index row (design system §7, adapted).
  *
- * Stretched-link pattern: the whole card is clickable, but only the room name
- * is a real link, so the accessibility tree gets one clean tab stop named after
- * the room. The focus ring is drawn on the card, not the name.
+ * Deliberately typography-led rather than image-led: the resort's current
+ * photography is working-resolution phone captures, and large showcase crops
+ * expose that. Here the serif name carries the row and the photograph is a
+ * small, consistently-cropped plate — supporting, not dominant. When real
+ * editorial photography arrives the plate can grow without touching anything
+ * else.
+ *
+ * Stretched-link pattern: the whole row is clickable, but only the room name is
+ * a real link, so the a11y tree gets one clean tab stop per room.
  */
 export function RoomCard({
+  index,
   slug,
   name,
   view,
   short,
+  showShort = true,
   price,
-  cta,
   image,
-  aspect = "aspect-[4/3]",
   className,
 }: {
+  index?: number;
   slug: string;
   name: string;
   /** Already-localised view label, e.g. "Sea View" */
   view?: string;
   short?: string;
+  /** Hidden in the narrow homepage rail; shown on the full-width listing */
+  showShort?: boolean;
   /** Already-formatted, e.g. "from ৳5,400 / night" */
   price?: string;
-  /** Visual affordance only — the whole card is the link */
-  cta?: string;
   image?: string | null;
-  aspect?: string;
   className?: string;
 }) {
   return (
     <article
       className={cn(
-        "group relative flex flex-col rounded-2xl",
-        "has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-teal has-[a:focus-visible]:ring-offset-4 has-[a:focus-visible]:ring-offset-paper",
+        "group relative flex items-center gap-5 border-t border-line py-7 transition-colors duration-[400ms] lg:gap-10 lg:py-10",
+        "hover:bg-sand/25 has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-teal has-[a:focus-visible]:ring-offset-2 has-[a:focus-visible]:ring-offset-paper",
         className,
       )}
     >
-      <div
-        className={cn(
-          "relative overflow-hidden rounded-2xl bg-sand transition-shadow duration-[400ms] group-hover:shadow-lift",
-          aspect,
-        )}
-      >
+      {/* Plate — small and uniformly cropped so four inconsistent snapshots
+          still read as one curated set. */}
+      <div className="relative aspect-[4/3] w-24 shrink-0 overflow-hidden rounded-lg bg-sand sm:w-32 lg:w-44 lg:rounded-xl">
         {image ? (
           <Image
             src={image}
             alt={name}
             fill
-            sizes="(min-width: 1024px) 55vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-[400ms] ease-out group-hover:scale-[1.03]"
+            sizes="(min-width: 1024px) 176px, (min-width: 640px) 128px, 96px"
+            className="object-cover transition-transform duration-[400ms] ease-out group-hover:scale-[1.04]"
           />
         ) : (
-          // Not every room type has photography yet. A quiet branded panel
-          // reads as intentional, where an empty box reads as broken.
-          <div className="flex size-full items-center justify-center bg-sand">
+          <div className="flex size-full items-center justify-center">
             <svg
               viewBox="0 0 60 44"
               aria-hidden="true"
-              className="w-12 text-moss/30"
+              className="w-7 text-moss/30"
               fill="currentColor"
             >
               <path d="M30 3 L43 26 L30 26 Z" />
@@ -74,46 +74,55 @@ export function RoomCard({
         )}
       </div>
 
-      <div className="flex flex-1 flex-col pt-6">
-        {view ? (
-          <p className="text-eyebrow font-medium uppercase text-moss">{view}</p>
-        ) : null}
+      {/* The row's voice */}
+      <div className="min-w-0 flex-1">
+        <p className="flex items-center gap-2.5 text-eyebrow font-medium uppercase text-moss">
+          {index != null ? (
+            <span className="tabular-nums text-ink-soft">
+              {String(index).padStart(2, "0")}
+            </span>
+          ) : null}
+          {index != null && view ? (
+            <span aria-hidden="true" className="h-3 w-px bg-line" />
+          ) : null}
+          {view ? <span>{view}</span> : null}
+        </p>
 
-        <h3 className="mt-3 font-display text-h3 text-ink">
+        <h3 className="mt-2 font-display text-h3 text-ink">
           <Link
             href={`/rooms/${slug}`}
-            className="underline-offset-4 outline-none after:absolute after:inset-0 after:rounded-2xl group-hover:underline"
+            className="underline-offset-[6px] outline-none after:absolute after:inset-0 group-hover:underline"
           >
             {name}
           </Link>
         </h3>
 
-        {short ? (
-          <p className="mt-2 max-w-[38ch] text-small text-ink-soft">{short}</p>
+        {short && showShort ? (
+          <p className="mt-2 hidden max-w-[46ch] text-small text-ink-soft sm:block">
+            {short}
+          </p>
         ) : null}
 
-        {/* Hairline foot: price against the quiet call to action. Gives the
-            card a base instead of leaving the text floating (§5). */}
-        <div className="mt-auto flex items-baseline justify-between gap-4 border-t border-line pt-5">
-          {price ? (
-            <span className="font-display text-body-lg font-medium text-ink">
-              {price}
-            </span>
-          ) : (
-            <span />
-          )}
-          {cta ? (
-            <span
-              aria-hidden="true"
-              className="inline-flex items-center gap-1.5 text-small font-medium text-forest"
-            >
-              {cta}
-              <span className="transition-transform duration-[250ms] group-hover:translate-x-1">
-                →
-              </span>
-            </span>
-          ) : null}
-        </div>
+        {/* Price rides under the name on phones, moves to its own column above */}
+        {price ? (
+          <p className="mt-2 font-display text-body font-medium text-ink lg:hidden">
+            {price}
+          </p>
+        ) : null}
+      </div>
+
+      <div className="hidden shrink-0 items-center justify-end gap-6 lg:flex">
+        {price ? (
+          <span className="whitespace-nowrap text-right font-display text-body font-medium text-ink xl:text-body-lg">
+            {price}
+          </span>
+        ) : null}
+        <span
+          aria-hidden="true"
+          className="text-h3 text-forest transition-transform duration-[250ms] group-hover:translate-x-1.5"
+        >
+          →
+        </span>
       </div>
     </article>
   );

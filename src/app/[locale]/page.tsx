@@ -75,7 +75,11 @@ export default async function HomePage({
         }
       />
 
-      <FeaturedRooms rooms={rooms} locale={locale} />
+      <FeaturedRooms
+        rooms={rooms}
+        locale={locale}
+        heroImage={settings?.heroImage}
+      />
 
       {/* Amenities */}
       <PageSection id="amenities" label={t("amenities.title")}>

@@ -3,7 +3,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getPublishedRooms, safe } from "@/lib/queries";
 import { loc } from "@/lib/i18n-content";
 import { taka } from "@/lib/format";
-import { cn } from "@/lib/utils";
 import { Container } from "@/components/Container";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Reveal } from "@/components/Reveal";
@@ -46,23 +45,12 @@ export default async function RoomsPage({
           />
         </Reveal>
 
-        <ul className="mt-16 grid gap-12 lg:mt-24 lg:grid-cols-12 lg:items-start lg:gap-x-12 lg:gap-y-8">
-          {rooms.map((room, i) => {
-            const wide = i % 4 === 0 || i % 4 === 3;
-            return (
-            <li
-              key={room.id}
-              className={cn(
-                "flex",
-                wide ? "lg:col-span-7" : "lg:col-span-5",
-                i % 2 === 1 && "lg:mt-24",
-              )}
-            >
-              <Reveal delay={Math.min(i, 3) * 0.09} className="flex w-full">
+        <ul className="mt-16 border-b border-line lg:mt-20">
+          {rooms.map((room, i) => (
+            <li key={room.id}>
+              <Reveal delay={Math.min(i, 4) * 0.08}>
                 <RoomCard
-                  className="w-full"
-                  aspect={wide ? "aspect-[4/3]" : "aspect-[4/5]"}
-                  cta={tc("viewDetails")}
+                  index={i + 1}
                   slug={room.slug}
                   name={loc(room.nameEn, room.nameBn, locale)}
                   view={
@@ -83,8 +71,7 @@ export default async function RoomsPage({
                 />
               </Reveal>
             </li>
-            );
-          })}
+          ))}
         </ul>
       </Container>
     </section>
