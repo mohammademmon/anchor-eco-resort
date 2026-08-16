@@ -18,7 +18,6 @@ import { FeaturedRooms } from "@/components/FeaturedRooms";
 import { PageSection } from "@/components/PageSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Placeholder } from "@/components/Placeholder";
-import { RoomCard } from "@/components/RoomCard";
 import { OfferCard } from "@/components/OfferCard";
 
 export async function generateMetadata({
@@ -75,11 +74,7 @@ export default async function HomePage({
         }
       />
 
-      <FeaturedRooms
-        rooms={rooms}
-        locale={locale}
-        heroImage={settings?.heroImage}
-      />
+      <FeaturedRooms rooms={rooms} locale={locale} />
 
       {/* Amenities */}
       <PageSection id="amenities" label={t("amenities.title")}>

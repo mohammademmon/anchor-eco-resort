@@ -6,7 +6,7 @@ import { taka } from "@/lib/format";
 import { Container } from "@/components/Container";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Reveal } from "@/components/Reveal";
-import { RoomCard } from "@/components/RoomCard";
+import { RoomBand } from "@/components/RoomBand";
 
 const KNOWN_VIEWS = new Set(["sea", "hill", "cottage"]);
 
@@ -33,8 +33,8 @@ export default async function RoomsPage({
   const rooms = await safe(getPublishedRooms, []);
 
   return (
-    <section className="bg-paper py-24 md:py-32 lg:py-40">
-      <Container>
+    <section className="bg-paper">
+      <Container className="py-24 md:py-32 lg:pb-20 lg:pt-40">
         <Reveal>
           <SectionHeader
             as="h1"
@@ -44,36 +44,35 @@ export default async function RoomsPage({
             intro={tr("header.intro")}
           />
         </Reveal>
-
-        <ul className="mt-16 border-b border-line lg:mt-20">
-          {rooms.map((room, i) => (
-            <li key={room.id}>
-              <Reveal delay={Math.min(i, 4) * 0.08}>
-                <RoomCard
-                  index={i + 1}
-                  slug={room.slug}
-                  name={loc(room.nameEn, room.nameBn, locale)}
-                  view={
-                    room.view && KNOWN_VIEWS.has(room.view)
-                      ? tr(`views.${room.view}`)
-                      : room.view || undefined
-                  }
-                  short={
-                    loc(room.shortEn, room.shortBn, locale) ||
-                    loc(room.descriptionEn, room.descriptionBn, locale)
-                  }
-                  price={
-                    room.weekdayRate
-                      ? tc("fromPrice", { price: taka(room.weekdayRate) })
-                      : undefined
-                  }
-                  image={room.images?.[0]}
-                />
-              </Reveal>
-            </li>
-          ))}
-        </ul>
       </Container>
+
+      <div className="flex flex-col">
+        {rooms.map((room, i) => (
+          <RoomBand
+            key={room.id}
+            index={i + 1}
+            align={i % 2 === 1 ? "right" : "left"}
+            slug={room.slug}
+            name={loc(room.nameEn, room.nameBn, locale)}
+            view={
+              room.view && KNOWN_VIEWS.has(room.view)
+                ? tr(`views.${room.view}`)
+                : room.view || undefined
+            }
+            short={
+              loc(room.shortEn, room.shortBn, locale) ||
+              loc(room.descriptionEn, room.descriptionBn, locale)
+            }
+            price={
+              room.weekdayRate
+                ? tc("fromPrice", { price: taka(room.weekdayRate) })
+                : undefined
+            }
+            cta={tc("viewDetails")}
+            image={room.images?.[0]}
+          />
+        ))}
+      </div>
     </section>
   );
 }
