@@ -1,40 +1,19 @@
-import { getTranslations } from "next-intl/server";
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import {
-  WavesLadder,
-  UtensilsCrossed,
-  Wifi,
-  Flower2,
-  Umbrella,
-  TreePalm,
-  Wine,
-  Droplets,
-  Sparkles,
-} from "lucide-react";
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { loc } from "@/lib/i18n-content";
 import { Container } from "@/components/Container";
-import { SectionHeader } from "@/components/SectionHeader";
 import { Reveal } from "@/components/Reveal";
 
-const POOL_IMAGE = "/images/generated/pool-golden-hour.png";
-
-/**
- * English amenity name → lucide icon. The DB `icon` column is empty, so the
- * mapping lives here keyed on the stable English name; anything unmapped falls
- * back to a neutral mark so the grid never breaks. One consistent size (24) and
- * stroke (1.5) across all eight — icon consistency is a $50k tell (design
- * system §11).
- */
-const ICONS: Record<string, typeof Sparkles> = {
-  "Infinity Pool": WavesLadder,
-  "Ocean Kitchen Restaurant": UtensilsCrossed,
-  "Free Wi-Fi": Wifi,
-  Spa: Flower2,
-  "Beachfront Access": Umbrella,
-  "Landscaped Gardens": TreePalm,
-  "Welcome Drinks": Wine,
-  "Bottled Water": Droplets,
-};
+const IMAGE = "/images/generated/dining-mood.png";
 
 type AmenityItem = {
   id: string;
@@ -45,89 +24,102 @@ type AmenityItem = {
 };
 
 /**
- * Amenities as a calm, warm editorial split (design system §4 whitespace, §8
- * imagery): a tall golden-hour pool photo held on one side, the eight amenities
- * as an airy two-column list on the other — no cards, no heavy borders, just
- * whitespace and a single moss icon per item. Sits on a lighter paper-raised
- * band framed by hairlines so it reads as a distinct, restful beat after the
- * dark hero / eco-story / room bands above.
+ * Amenities as a full-bleed cinematic band (the immersive language already used
+ * for the hero and eco-story §2). The seaside photograph runs edge-to-edge with
+ * a slow parallax and a forest-night scrim; an oversized serif headline sits at
+ * the top, and the eight amenities read as a numbered editorial index in cream
+ * with thin gold hairlines at the foot — no icons, no cards, no template grid.
+ * The image is left to breathe in the gap between the two.
  */
-export async function Amenities({
+export function Amenities({
   amenities,
   locale,
 }: {
   amenities: AmenityItem[];
   locale: string;
 }) {
-  const t = await getTranslations("Home.amenities");
+  const t = useTranslations("Home.amenities");
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+
   if (!amenities.length) return null;
 
   return (
     <section
+      ref={ref}
       id="amenities"
       aria-label={t("title")}
-      className="border-y border-line bg-paper-raised"
+      className="relative isolate flex min-h-[100svh] flex-col justify-between overflow-hidden bg-night py-24 lg:py-28"
     >
-      <Container className="py-24 md:py-32 lg:py-40">
-        <div className="grid gap-y-12 lg:grid-cols-12 lg:gap-x-16">
-          {/* Editorial image — sticky on desktop so it holds while the list scrolls */}
-          <Reveal className="lg:col-span-5">
-            <figure className="lg:sticky lg:top-28">
-              <div className="group relative aspect-[4/3] overflow-hidden rounded-2xl shadow-soft lg:aspect-[4/5]">
-                <Image
-                  src={POOL_IMAGE}
-                  alt={t("imageAlt")}
-                  fill
-                  sizes="(min-width: 1024px) 40vw, 100vw"
-                  className="object-cover transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-night/70 to-transparent"
-                />
-                <figcaption className="text-on-photo absolute inset-x-0 bottom-0 flex items-center gap-3 p-5 text-small text-on-night">
-                  <span aria-hidden="true" className="h-px w-8 bg-gold" />
-                  {t("imageCaption")}
-                </figcaption>
-              </div>
-            </figure>
-          </Reveal>
+      {/* Full-bleed photograph with a slow parallax drift */}
+      <div className="absolute inset-0 -z-20">
+        <motion.div
+          className="absolute inset-0"
+          style={reduce ? undefined : { y, scale: 1.12 }}
+        >
+          <Image
+            src={IMAGE}
+            alt={t("imageAlt")}
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        </motion.div>
+      </div>
+      {/* Forest-night scrim: dark at the top and foot where the type sits, so the
+          photograph stays visible and luminous through the middle. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-night/85 via-night/35 to-night/90"
+      />
 
-          {/* Header + amenity grid */}
-          <div className="lg:col-span-7">
-            <Reveal>
-              <SectionHeader
-                eyebrow={t("eyebrow")}
-                title={t("title")}
-                intro={t("intro")}
-              />
-            </Reveal>
+      {/* Headline */}
+      <Container className="relative">
+        <Reveal>
+          <p className="text-on-photo flex items-center gap-3 text-eyebrow font-medium uppercase text-gold">
+            <span aria-hidden="true" className="h-px w-8 bg-gold/70" />
+            {t("eyebrow")}
+          </p>
+          <h2 className="text-on-photo mt-6 max-w-[15ch] text-balance font-display text-display text-on-night">
+            {t("title")}
+          </h2>
+          <p className="text-on-photo mt-6 max-w-[44ch] text-body-lg text-on-night-soft">
+            {t("intro")}
+          </p>
+        </Reveal>
+      </Container>
 
-            <ul className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 md:mt-14 md:gap-x-12">
-              {amenities.map((a, i) => {
-                const Icon = ICONS[a.nameEn] ?? Sparkles;
-                const note = loc(a.noteEn, a.noteBn, locale);
-                return (
-                  <li key={a.id}>
-                    <Reveal delay={Math.min(i * 0.06, 0.3)}>
-                      <Icon
-                        aria-hidden="true"
-                        strokeWidth={1.5}
-                        className="size-6 text-moss"
-                      />
-                      <h3 className="mt-4 font-display text-body-lg text-ink">
-                        {loc(a.nameEn, a.nameBn, locale)}
-                      </h3>
-                      {note ? (
-                        <p className="mt-1.5 text-small text-ink-soft">{note}</p>
-                      ) : null}
-                    </Reveal>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
+      {/* Numbered editorial index of the eight amenities */}
+      <Container className="relative mt-20 lg:mt-24">
+        <ul className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4 md:gap-x-10 lg:gap-x-14">
+          {amenities.map((a, i) => {
+            const note = loc(a.noteEn, a.noteBn, locale);
+            return (
+              <li key={a.id}>
+                <Reveal delay={Math.min(i * 0.05, 0.25)}>
+                  <div className="border-t border-on-night/25 pt-4">
+                    <span className="text-small font-medium tabular-nums text-gold">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="text-on-photo mt-3 font-display text-h3 text-on-night">
+                      {loc(a.nameEn, a.nameBn, locale)}
+                    </h3>
+                    {note ? (
+                      <p className="text-on-photo mt-1.5 text-small text-on-night-soft">
+                        {note}
+                      </p>
+                    ) : null}
+                  </div>
+                </Reveal>
+              </li>
+            );
+          })}
+        </ul>
       </Container>
     </section>
   );
