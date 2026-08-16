@@ -15,6 +15,7 @@ import { roomPrice } from "@/lib/format";
 import { Hero } from "@/components/Hero";
 import { EcoStory } from "@/components/EcoStory";
 import { FeaturedRooms } from "@/components/FeaturedRooms";
+import { Amenities } from "@/components/Amenities";
 import { PageSection } from "@/components/PageSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Placeholder } from "@/components/Placeholder";
@@ -77,19 +78,7 @@ export default async function HomePage({
       <FeaturedRooms rooms={rooms} locale={locale} />
 
       {/* Amenities */}
-      <PageSection id="amenities" label={t("amenities.title")}>
-        <SectionHeader eyebrow={t("amenities.eyebrow")} title={t("amenities.title")} />
-        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {amenities.map((a) => (
-            <li key={a.id} className="rounded-xl border border-line bg-paper-raised p-4">
-              <p className="font-medium text-ink">{loc(a.nameEn, a.nameBn, locale)}</p>
-              {loc(a.noteEn, a.noteBn, locale) ? (
-                <p className="mt-1 text-sm text-ink-soft">{loc(a.noteEn, a.noteBn, locale)}</p>
-              ) : null}
-            </li>
-          ))}
-        </ul>
-      </PageSection>
+      <Amenities amenities={amenities} locale={locale} />
 
       {/* Offers */}
       <PageSection id="offers" label={t("offers.title")}>
